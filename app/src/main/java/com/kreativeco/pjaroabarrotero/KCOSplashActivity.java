@@ -22,7 +22,7 @@ public class KCOSplashActivity extends Activity {
                     sleep(5*1000);
 
                     // After 5 seconds redirect to another intent
-                    Intent i=new Intent(getBaseContext(), KCOMainActivity.class);
+                    Intent i=new Intent(getBaseContext(), KCOLoginActivity.class);
                     startActivity(i);
 
                     //Remove activity

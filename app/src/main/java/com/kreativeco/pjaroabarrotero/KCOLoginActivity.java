@@ -5,27 +5,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseCrashReporting;
 
-
-public class KCOMainActivity extends Activity {
+public class KCOLoginActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kcomain);
-        ParseCrashReporting.enable(this);
-        Parse.initialize(this, String.valueOf(R.string.application_id), String.valueOf(R.string.client_key));
-        ParseAnalytics.trackAppOpenedInBackground(getIntent());
-        throw new RuntimeException("test parse exception");
+        setContentView(R.layout.activity_kcologin);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_kcomain, menu);
+        getMenuInflater().inflate(R.menu.menu_kcologin, menu);
         return true;
     }
 

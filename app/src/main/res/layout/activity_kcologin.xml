@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_02fondo"
+    tools:context="com.kreativeco.pjaroabarrotero.KCOLoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="217dp"
+            android:layout_height="325dp"
+            android:id="@+id/logo"
+            android:background="@drawable/_02logo"
+            android:contentDescription="@string/logo"/>
+
+        <EditText
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:id="@+id/user"
+            android:hint="@string/user"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/_02campo"
+            android:layout_marginTop="10dp"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:id="@+id/password"
+            android:hint="@string/pass"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/_02campo"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:textSize="30dp"/>
+
+        <ImageButton
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:id="@+id/loginButton"
+            android:background="@drawable/_02entrar"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="80dp"
+            android:alpha="0.9"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resetpass"
+            android:background="@android:color/transparent"
+            android:alpha="0.9"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

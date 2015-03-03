@@ -4,13 +4,22 @@
     <string name="app_name">Pájaro Abarrotero</string>
     <string name="action_settings">Settings</string>
 
-<!--     Application Id an Client key for parse -->
+    <!-- Application Id an Client key for parse -->
 
     <string name="application_id">7Rd3N5WzuDSTrNOL8aY3TZZ84mYb3DATNkfNZ71k</string>
     <string name="client_key">razRXf47MMsN0LQcPAanvhxG2i9YIiBhg8zn3F0v</string>
 
-<!--    Strings for KCOSplashActivity -->
+    <!-- Strings for KCOSplashActivity -->
 
     <string name="title_activity_kcosplash">KCOSplashActivity</string>
+    <string name="title_activity_kcologin">KCOLoginActivity</string>
+
+    <!--Strings for KCOLoginActivity and its xml file-->
+
+    <string name="user">USUARIO</string>
+    <string name="pass">CONTRASEÑA</string>
+    <string name="register">Registro</string>
+    <string name="resetpass">Olvidé mi contraseña</string>
+    <string name="logo">logo</string>
 
 </resources>

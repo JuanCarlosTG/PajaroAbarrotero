@@ -11,17 +11,16 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".KCOMainActivity"
-            android:label="@string/app_name" >
+            android:name=".KCOSplashActivity"
+            android:label="@string/title_activity_kcosplash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".KCOSplashActivity"
-            android:label="@string/title_activity_kcosplash" >
+            android:name=".KCOLoginActivity"
+            android:label="@string/title_activity_kcologin" >
         </activity>
     </application>
 
