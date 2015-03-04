@@ -3,6 +3,7 @@ package com.kreativeco.pjaroabarrotero;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,7 +30,7 @@ public class KCOSplashActivity extends Activity {
                     finish();
 
                 } catch (Exception e) {
-
+                    Log.e("EXception thread", e.toString());
                 }
             }
         };

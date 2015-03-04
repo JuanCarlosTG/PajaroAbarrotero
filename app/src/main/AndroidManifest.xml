@@ -12,15 +12,24 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".KCOSplashActivity"
-            android:label="@string/title_activity_kcosplash">
+            android:label="@string/title_activity_kcosplash" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".KCOLoginActivity"
             android:label="@string/title_activity_kcologin" >
+        </activity>
+        <activity
+            android:name=".KCOMainMenuActivity"
+            android:label="@string/title_activity_kcomain_menu" >
+        </activity>
+        <activity
+            android:name=".KCORegisterActivity"
+            android:label="@string/title_activity_kcoregister" >
         </activity>
     </application>
 

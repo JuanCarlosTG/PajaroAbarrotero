@@ -14,12 +14,21 @@
     <string name="title_activity_kcosplash">KCOSplashActivity</string>
     <string name="title_activity_kcologin">KCOLoginActivity</string>
 
-    <!--Strings for KCOLoginActivity and its xml file-->
+    <!-- Strings for KCOLoginActivity and its xml file -->
 
     <string name="user">USUARIO</string>
     <string name="pass">CONTRASEÑA</string>
     <string name="register">Registro</string>
     <string name="resetpass">Olvidé mi contraseña</string>
     <string name="logo">logo</string>
+
+    <!-- Strings for KCORegisterActivity and its xml file -->>
+
+    <string name="title_activity_kcomain_menu">KCOMainMenuActivity</string>
+    <string name="title_activity_kcoregister">KCORegisterActivity</string>
+
+    <string name="shop_name">Nombre de la tienda</string>
+    <string name="my_name">Mi Nombre</string>
+    <string name="address">Dirección</string>
 
 </resources>

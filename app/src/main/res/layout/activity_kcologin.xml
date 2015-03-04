@@ -44,7 +44,8 @@
             android:layout_height="50dp"
             android:id="@+id/loginButton"
             android:background="@drawable/_02entrar"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:onClick="launchMainMenuActivity"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -53,6 +54,7 @@
             android:background="@android:color/transparent"
             android:layout_marginTop="80dp"
             android:alpha="0.9"
+            android:onClick="launchRegisterActivity"
             />
 
         <Button
