@@ -1,156 +1,173 @@
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!--<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/_02fondo"
-    tools:context="com.kreativeco.pjaroabarrotero.KCOMainMenuActivity">
-    <RelativeLayout
+    android:layout_height="match_parent">-->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/barra_titulos"
-        android:gravity="center_vertical">
-        <ImageView
-            android:layout_width="210dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/_02fondo"
+        android:id="@id/mainMenuLayout"
+        tools:context="com.kreativeco.pjaroabarrotero.KCOMainMenuActivity">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/barra_titulos"
+            android:gravity="center_vertical">
+            <ImageButton
+                android:layout_width="210dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/_06_titulo"/>
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/_06_titulo"/>
+            android:layout_marginTop="60dp"
+            android:scrollbars="none"
+            android:background="@drawable/_02campo">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp">
+
+                <RelativeLayout
+                    android:layout_width="149dp"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:onClick="launchPersonalCare"
+                        android:background="@drawable/_06_1cuidado_titulo"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/_05_linea_horizontal"/>
+
+                <RelativeLayout
+                    android:layout_width="149dp"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="65dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:onClick="launchHome"
+                        android:background="@drawable/_06_2hogar_titulo"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/_05_linea_horizontal"/>
+
+                <RelativeLayout
+                    android:layout_width="149dp"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="95dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:onClick="launchFoods"
+                        android:background="@drawable/_06_3alimentos_titulo"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/_05_linea_horizontal"/>
+
+                <RelativeLayout
+                    android:layout_width="149dp"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="65dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:onClick="launchOthers"
+                        android:background="@drawable/_06_4otros_titulo"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="8dp"
+            android:layout_marginTop="100dp"
+            android:scrollbars="none"
+            android:background="@drawable/_02campo">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="149dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/red_bar"
+                    android:background="@drawable/_06_1cuidado_barra"
+                    android:visibility="invisible"/>
+
+                <ImageView
+                    android:layout_width="149dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/blue_bar"
+                    android:background="@drawable/_06_2hogar_barra"
+                    android:layout_marginLeft="3dp"
+                    android:visibility="invisible"/>
+
+                <ImageView
+                    android:layout_width="149dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/yellow_bar"
+                    android:background="@drawable/_06_3alimentos_barra"
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible"/>
+
+                <ImageView
+                    android:layout_width="149dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/green_bar"
+                    android:background="@drawable/_06_4otros_barra"
+                    android:layout_marginLeft="1dp"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
     </RelativeLayout>
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="60dp"
-        android:scrollbars="none"
-        android:background="@drawable/_02campo">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp">
-
-            <RelativeLayout
-                android:layout_width="149dp"
-                android:layout_height="40dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:onClick="launchPersonalCare"
-                    android:background="@drawable/_06_1cuidado_titulo"/>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="2dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/_05_linea_horizontal"/>
-
-            <RelativeLayout
-                android:layout_width="149dp"
-                android:layout_height="40dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:layout_width="65dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:onClick="launchHome"
-                    android:background="@drawable/_06_2hogar_titulo"/>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="2dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/_05_linea_horizontal"/>
-
-            <RelativeLayout
-                android:layout_width="149dp"
-                android:layout_height="40dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:layout_width="95dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:onClick="launchFoods"
-                    android:background="@drawable/_06_3alimentos_titulo"/>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="2dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/_05_linea_horizontal"/>
-
-            <RelativeLayout
-                android:layout_width="149dp"
-                android:layout_height="40dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:layout_width="65dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="center"
-                    android:onClick="launchOthers"
-                    android:background="@drawable/_06_4otros_titulo"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="8dp"
-        android:layout_marginTop="100dp"
-        android:scrollbars="none"
-        android:background="@drawable/_02campo">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/red_bar"
-                android:background="@drawable/_06_1cuidado_barra"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/blue_bar"
-                android:background="@drawable/_06_2hogar_barra"
-                android:layout_marginLeft="3dp"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/yellow_bar"
-                android:background="@drawable/_06_3alimentos_barra"
-                android:layout_marginLeft="2dp"
-                android:visibility="invisible"/>
-
-            <ImageView
-                android:layout_width="149dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/green_bar"
-                android:background="@drawable/_06_4otros_barra"
-                android:layout_marginLeft="1dp"
-                android:visibility="invisible"/>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-</RelativeLayout>
+<!--   <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+</android.support.v4.widget.DrawerLayout>-->

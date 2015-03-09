@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kreativeco.pjaroabarrotero" >
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.camera2"/>
 
     <application
         android:allowBackup="true"
@@ -31,6 +30,30 @@
             android:name=".KCORegisterActivity"
             android:label="@string/title_activity_kcoregister" >
         </activity>
+        <activity
+            android:name=".KCOMainDrawerActivity"
+            android:label="@string/title_activity_kcomain_drawer" >
+        </activity>
+        <activity
+            android:name=".KCOProfileActivity"
+            android:label="@string/title_activity_kcoprofile" >
+        </activity>
+        <activity
+            android:name=".KCOOrdersActivity"
+            android:label="@string/title_activity_kcoorders" >
+        </activity>
+        <activity
+            android:name=".KCOOrderDetailsActivity"
+            android:label="@string/title_activity_kcoorder_details" >
+        </activity>
+        <activity
+            android:name=".KCOProductDetailsActivity"
+            android:label="@string/title_activity_kcoproduct_details" >
+        </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>

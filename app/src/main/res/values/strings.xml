@@ -11,7 +11,7 @@
 
     <!-- Strings for KCOSplashActivity -->
 
-    <string name="title_activity_kcosplash">KCOSplashActivity</string>
+    <string name="title_activity_kcosplash">Pájaro Abarrotero</string>
     <string name="title_activity_kcologin">KCOLoginActivity</string>
 
     <!-- Strings for KCOLoginActivity and its xml file -->
@@ -22,13 +22,29 @@
     <string name="resetpass">Olvidé mi contraseña</string>
     <string name="logo">logo</string>
 
-    <!-- Strings for KCORegisterActivity and its xml file -->>
+    <!-- Strings for KCORegisterActivity and its xml file -->
 
     <string name="title_activity_kcomain_menu">KCOMainMenuActivity</string>
     <string name="title_activity_kcoregister">KCORegisterActivity</string>
-
     <string name="shop_name">Nombre de la tienda</string>
     <string name="my_name">Mi Nombre</string>
     <string name="address">Dirección</string>
+
+    <!-- Strings and resources for KCOMainNavigationDrawer and its xml file -->
+
+    <string name="title_activity_kcomain_navigation_drawer">KCOMainNavigationDrawer</string>
+    <string name="title_activity_kcomain_drawer">KCOMainDrawerActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_kcoprofile">KCOProfileActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_kcoorders">KCOOrdersActivity</string>
+    <string name="title_activity_kcoorder_details">KCOOrderDetailsActivity</string>
+    <string name="title_activity_kcoproduct_details">KCOProductDetailsActivity</string>
 
 </resources>
