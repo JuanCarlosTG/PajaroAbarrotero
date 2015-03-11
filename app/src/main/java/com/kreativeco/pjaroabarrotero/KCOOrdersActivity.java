@@ -21,7 +21,7 @@ public class KCOOrdersActivity extends Activity {
     ImageView redBar, blueBar, yellowBar, greenBar;
     ListView committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
     TextView totalCost, folio;
-    ImageButton sendOrderBtn;
+    ImageButton sendOrderBtn, proofBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
