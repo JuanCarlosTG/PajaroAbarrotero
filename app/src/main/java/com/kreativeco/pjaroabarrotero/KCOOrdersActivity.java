@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 public class KCOOrdersActivity extends Activity {
 
     ImageView redBar, blueBar, yellowBar, greenBar;
-    ListView orderList;
+    ListView committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
+    TextView totalCost, folio;
+    ImageButton sendOrderBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +32,24 @@ public class KCOOrdersActivity extends Activity {
         blueBar = (ImageView) findViewById(R.id.blue_bar2);
         yellowBar = (ImageView) findViewById(R.id.yellow_bar2);
         greenBar = (ImageView) findViewById(R.id.green_bar2);
-        this.orderList = (ListView) findViewById(R.id.list_orders);
+
+        this.committedOrderList = (ListView) findViewById(R.id.list_committed_orders);
+        this.orderDetailsList = (ListView) findViewById(R.id.list_orders_details);
+        this.registeredOredersList = (ListView) findViewById(R.id.list_registered_orders);
+        this.sendOrdersList = (ListView) findViewById(R.id.list_send_orders);
+
+        this.totalCost = (TextView) findViewById(R.id.total_cost);
+        this.folio = (TextView) findViewById(R.id.folio);
+
+        this.sendOrderBtn = (ImageButton) findViewById(R.id.send_order_btn);
 
         ArrayList<KCOListItems> listItems = getItems();
 
-        KCOListAdapterToOrder customaAdapter = new KCOListAdapterToOrder(this, listItems);
+        KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(this, listItems);
 
-        orderList.setAdapter(customaAdapter);
+        orderDetailsList.setAdapter(customAdapter);
 
-        orderList.setOnItemClickListener(new DrawerView());
+        orderDetailsList.setOnItemClickListener(new DrawerView());
     }
 
     private class DrawerView implements ListView.OnItemClickListener{
@@ -49,51 +62,51 @@ public class KCOOrdersActivity extends Activity {
     private void selectItem(int position){
         switch (position){
             case 0:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 1:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 2:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 3:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 4:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 5:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 6:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 7:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 8:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 9:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 10:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 11:
-                launchOrderDetails();
+                launchProductDetails();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
 
@@ -105,34 +118,9 @@ public class KCOOrdersActivity extends Activity {
 
     private ArrayList<KCOListItems>getItems(){
 
-        ArrayList<KCOListItems> items = new ArrayList<KCOListItems>();
+        ArrayList<KCOListItems> items = new ArrayList<>();
 
         items.add(new KCOListItems(1, "Pedido1", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(2, "Pedido2", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(3, "Pedido3", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(4, "Pedido4", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(5, "Pedido5", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(6, "Pedido6", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(7, "Pedido7", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(8, "Pedido8", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(9, "Pedido9", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(10, "Pedido10", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(11, "Pedido11", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(12, "Pedido12", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(13, "Pedido13", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(14, "Pedido14", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(15, "Pedido15", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(16, "Pedido16", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(17, "Pedido17", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(18, "Pedido18", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(19, "Pedido19", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(20, "Pedido20", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(21, "Pedido21", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(22, "Pedido22", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(23, "Pedido23", "drawable/_07icono_canasta"));
-        items.add(new KCOListItems(24, "Pedido24", "drawable/_07icono_canasta"));
-
-
 
         return items;
     }
@@ -158,40 +146,65 @@ public class KCOOrdersActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void hideButtons(){
+    public void hideButtons()
+    {
+
         redBar.setVisibility(View.INVISIBLE);
         blueBar.setVisibility(View.INVISIBLE);
         yellowBar.setVisibility(View.INVISIBLE);
         greenBar.setVisibility(View.INVISIBLE);
+        committedOrderList.setVisibility(View.INVISIBLE);
+        orderDetailsList.setVisibility(View.INVISIBLE);
+        registeredOredersList.setVisibility(View.INVISIBLE);
+        sendOrdersList.setVisibility(View.INVISIBLE);
+        totalCost.setVisibility(View.INVISIBLE);
+        folio.setVisibility(View.INVISIBLE);
+        sendOrderBtn.setVisibility(View.INVISIBLE);
+
     }
 
     public void launchOutStanding(View v)
     {
+
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
+        orderDetailsList.setVisibility(View.VISIBLE);
+        totalCost.setVisibility(View.VISIBLE);
+        folio.setVisibility(View.VISIBLE);
+        sendOrderBtn.setVisibility(View.VISIBLE);
+
     }
 
     public void launchRegistered(View v)
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
+        registeredOredersList.setVisibility(View.VISIBLE);
     }
 
     public void launchSend(View v)
     {
         hideButtons();
         yellowBar.setVisibility(View.VISIBLE);
+        sendOrdersList.setVisibility(View.VISIBLE);
     }
 
     public void launchDelivered(View v)
     {
         hideButtons();
         greenBar.setVisibility(View.VISIBLE);
+        committedOrderList.setVisibility(View.VISIBLE);
     }
 
-    public void launchOrderDetails()
+    public void launchProductDetails()
+    {
+        Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOProductDetailsActivity.class);
+        startActivity(launchActivity);
+    }
+
+    /*public void launchOrderDetails()
     {
         Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOOrderDetailsActivity.class);
         startActivity(launchActivity);
-    }
+    }*/
 }

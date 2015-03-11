@@ -23,10 +23,6 @@
             android:label="@string/title_activity_kcologin" >
         </activity>
         <activity
-            android:name=".KCOMainMenuActivity"
-            android:label="@string/title_activity_kcomain_menu" >
-        </activity>
-        <activity
             android:name=".KCORegisterActivity"
             android:label="@string/title_activity_kcoregister" >
         </activity>

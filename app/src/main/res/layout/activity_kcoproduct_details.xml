@@ -1,8 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/producto"
+    android:background="@drawable/_fondo"
+    android:orientation="vertical"
     tools:context="com.kreativeco.pjaroabarrotero.KCOProductDetailsActivity">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/barra_titulos"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/CodeFont"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:textSize="25dp"
+            android:text="@string/title_product_details"
+            />
+
+        <TextView
+            style="@style/CodeFont"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="70dp"
+            android:textSize="25dp"
+            android:text="@string/title_menu"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/product_image"
+            android:layout_height="380dp"
+            android:background="#bababa"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFA39C"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/product_description"
+            android:layout_height="270dp"
+            android:background="#bababa"
+            android:textSize="25dp"
+            android:text="Descripción del producto:"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/layout_piker">
+
+        </RelativeLayout>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/_09agregar"/>
+    </LinearLayout>
+
+</LinearLayout>

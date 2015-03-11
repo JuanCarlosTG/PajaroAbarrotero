@@ -2,13 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pedido_detalle"
+    android:background="@drawable/_fondo"
     tools:context="com.kreativeco.pjaroabarrotero.KCOOrderDetailsActivity">
 
-    <Button
+    <ListView android:id="@+id/list_orders"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="103dp"
-        android:alpha="0.0"
-        android:onClick="launchProductDetails"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="#b7878787"
+        android:dividerHeight="1dp"
+        android:scrollbars="none"
+        android:background="#ffffff"/>
+
 </RelativeLayout>
