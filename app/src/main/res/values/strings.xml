@@ -47,4 +47,11 @@
     <string name="title_activity_kcoorder_details">KCOOrderDetailsActivity</string>
     <string name="title_activity_kcoproduct_details">KCOProductDetailsActivity</string>
 
+    <string name="title_menu">MENÚ</string>
+    <string name="title_catalogue">Catálogo</string>
+    <string name="title_product_details">Detalles Del Producto</string>
+    <string name="title_register">Registro</string>
+    <string name="title_profile">Mi Perfil</string>
+    <string name="title_orders">Pedidos</string>
+
 </resources>

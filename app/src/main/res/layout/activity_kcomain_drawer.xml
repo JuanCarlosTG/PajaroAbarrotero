@@ -13,18 +13,30 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/_02fondo"
+            android:background="@drawable/_fondo"
             android:id="@id/mainMenuLayout">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/barra_titulos"
                 android:gravity="center_vertical">
-                <ImageButton
-                    android:layout_width="210dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/_06_titulo"/>
+                <TextView
+                    style="@style/CodeFont"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:textSize="25dp"
+                    android:text="@string/title_catalogue"
+                    />
+
+                <TextView
+                    style="@style/CodeFont"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="70dp"
+                    android:textSize="25dp"
+                    android:text="@string/title_menu"
+                    />
             </RelativeLayout>
 
             <HorizontalScrollView
