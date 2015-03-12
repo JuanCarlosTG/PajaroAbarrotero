@@ -1,12 +1,14 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,7 +23,7 @@ public class KCOOrdersActivity extends Activity {
     ImageView redBar, blueBar, yellowBar, greenBar;
     ListView committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
     TextView totalCost, folio;
-    ImageButton sendOrderBtn, proofBtn;
+    ImageButton sendOrderBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,9 @@ public class KCOOrdersActivity extends Activity {
         orderDetailsList.setAdapter(customAdapter);
 
         orderDetailsList.setOnItemClickListener(new DrawerView());
+
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(orderDetailsList.getWindowToken(), 0);
     }
 
     private class DrawerView implements ListView.OnItemClickListener{
@@ -120,7 +125,27 @@ public class KCOOrdersActivity extends Activity {
 
         ArrayList<KCOListItems> items = new ArrayList<>();
 
-        items.add(new KCOListItems(1, "Pedido1", "drawable/_07icono_canasta"));
+        items.add(new KCOListItems(1, "Shampoo Z", "drawable/order01"));
+        items.add(new KCOListItems(2, "Shampoo Y", "drawable/order02"));
+        items.add(new KCOListItems(3, "Shampoo X", "drawable/order03"));
+        items.add(new KCOListItems(4, "Shampoo W", "drawable/order04"));
+        items.add(new KCOListItems(5, "Shampoo V", "drawable/order01"));
+        items.add(new KCOListItems(6, "Shampoo T", "drawable/order02"));
+        items.add(new KCOListItems(7, "Shampoo S", "drawable/order03"));
+        items.add(new KCOListItems(8, "Shampoo R", "drawable/order04"));
+        items.add(new KCOListItems(9, "Shampoo Q", "drawable/order01"));
+        items.add(new KCOListItems(10, "Shampoo P", "drawable/order02"));
+        items.add(new KCOListItems(11, "Shampoo N", "drawable/order03"));
+        items.add(new KCOListItems(12, "Shampoo M", "drawable/order04"));
+        items.add(new KCOListItems(13, "Shampoo L", "drawable/order01"));
+        items.add(new KCOListItems(14, "Shampoo K", "drawable/order02"));
+        items.add(new KCOListItems(15, "Shampoo J", "drawable/order03"));
+        items.add(new KCOListItems(16, "Shampoo H", "drawable/order04"));
+        items.add(new KCOListItems(17, "Shampoo G", "drawable/order01"));
+        items.add(new KCOListItems(18, "Shampoo F", "drawable/order02"));
+        items.add(new KCOListItems(19, "Shampoo D", "drawable/order03"));
+        items.add(new KCOListItems(20, "Shampoo C", "drawable/order04"));
+
 
         return items;
     }

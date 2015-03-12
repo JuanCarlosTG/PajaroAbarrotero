@@ -15,16 +15,26 @@
             android:layout_height="match_parent"
             android:background="@drawable/_fondo"
             android:id="@id/mainMenuLayout">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/barra_titulos"
                 android:gravity="center_vertical">
+
+                <ImageButton
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/menu_button_catalogue"
+                    android:background="@drawable/catalogo"/>
+                    <!--android:onClick="openMenu"-->/>
+
                 <TextView
                     style="@style/CodeFont"
                     android:gravity="center"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
+                    android:layout_marginTop="12dp"
                     android:textSize="25dp"
                     android:text="@string/title_catalogue"
                     />
@@ -32,6 +42,7 @@
                 <TextView
                     style="@style/CodeFont"
                     android:gravity="center"
+                    android:layout_marginTop="12dp"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="70dp"
                     android:textSize="25dp"
