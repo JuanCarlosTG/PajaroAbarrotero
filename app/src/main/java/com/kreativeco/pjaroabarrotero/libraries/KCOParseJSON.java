@@ -19,14 +19,14 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class ParseaJSON {
+public class KCOParseJSON {
 
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
 
     // definimos el constructor
-    public ParseaJSON() {
+    public KCOParseJSON() {
 
     }
 
@@ -61,7 +61,7 @@ public class ParseaJSON {
             }
             is.close();
             json = sb.toString();
-            Log.d("JSON", json);
+            Log.d("JSON Parse", json);
         } catch (Exception e) {
             Log.e("Error en el buffer", "Error al convertir el resultado " + e.toString());
         }

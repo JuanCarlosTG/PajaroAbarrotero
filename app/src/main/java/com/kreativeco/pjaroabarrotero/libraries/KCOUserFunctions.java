@@ -8,9 +8,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import android.util.Log;
 
-public class FuncionesDeUsuario {
+public class KCOUserFunctions {
 
-    private ParseaJSON jsonParser;
+    private KCOParseJSON jsonParser;
 
     private static String webServicesURL = "http://kreativeco.com/TESTING/pabarrotero/actions/webservices.php";
     private static String etiqueta_login = "login";
@@ -24,8 +24,8 @@ public class FuncionesDeUsuario {
     private static String etiqueta_getOTCD = "getOrderToCustomerDetail";
 
     // constructor
-    public FuncionesDeUsuario(){
-        jsonParser = new ParseaJSON();
+    public KCOUserFunctions(){
+        jsonParser = new KCOParseJSON();
     }
 
     /**
