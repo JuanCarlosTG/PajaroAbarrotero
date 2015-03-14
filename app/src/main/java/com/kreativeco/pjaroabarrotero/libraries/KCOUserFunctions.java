@@ -28,14 +28,9 @@ public class KCOUserFunctions {
         jsonParser = new KCOParseJSON();
     }
 
-    /**
-     * funcion que hace la petición de Login
-     * @param username
-     * @param password
-     * */
     public JSONObject loginApp(String username,String password){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_login));
         parametros.add(new BasicNameValuePair("username", username));
         parametros.add(new BasicNameValuePair("password", password));
@@ -47,7 +42,7 @@ public class KCOUserFunctions {
 
     public JSONObject addProfile(String shop,String name, String address, String latitud,String longitud){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_addP));
         parametros.add(new BasicNameValuePair("shop", shop));
         parametros.add(new BasicNameValuePair("name", name));
@@ -62,7 +57,7 @@ public class KCOUserFunctions {
 
     public JSONObject recoverPass(String username){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_recPass));
         parametros.add(new BasicNameValuePair("username", username));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
@@ -73,7 +68,7 @@ public class KCOUserFunctions {
 
     public JSONObject getProfile(String token){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_getP));
         parametros.add(new BasicNameValuePair("token", token));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
@@ -84,7 +79,7 @@ public class KCOUserFunctions {
 
     public JSONObject getProductsToCat(String token, String catID){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_getPTC));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("categorys_id", catID));
@@ -96,7 +91,7 @@ public class KCOUserFunctions {
 
     public JSONObject getProduct(String token, String codP){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_getProduct));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("cod", codP));
@@ -109,7 +104,7 @@ public class KCOUserFunctions {
 
     public JSONObject addOrder(String token, String[] jsonOrder){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_addO));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("json", Arrays.toString(jsonOrder)));
@@ -122,7 +117,7 @@ public class KCOUserFunctions {
 
     public JSONObject getOrdersToCust(String token, String status){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_getO));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("status", status));
@@ -134,7 +129,7 @@ public class KCOUserFunctions {
 
     public JSONObject getOrdersToCustDetail(String token, String folio){
         // Construimos los parametros
-        List<NameValuePair> parametros = new ArrayList<NameValuePair>();
+        List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_getOTCD));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("folio_number", folio));
