@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/_fondo"
     tools:context="com.kreativeco.pjaroabarrotero.KCOLoginActivity">
+    <!--android:background="@drawable/_fondo"-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +63,9 @@
             android:layout_height="wrap_content"
             android:text="@string/resetpass"
             android:background="@android:color/transparent"
+            android:layout_marginTop="30dp"
             android:alpha="0.9"
+            android:onClick="launchResetPassword"
             />
 
     </LinearLayout>

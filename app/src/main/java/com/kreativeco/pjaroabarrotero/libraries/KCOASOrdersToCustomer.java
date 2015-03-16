@@ -1,6 +1,7 @@
 package com.kreativeco.pjaroabarrotero.libraries;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +30,13 @@ public class KCOASOrdersToCustomer extends AsyncTask<String, Integer, ArrayList<
         KCOUserFunctions userFun = new KCOUserFunctions();
         JSONObject json = userFun.getOrdersToCust(params[0],params[1]);
 
-        ArrayList<HashMap<String, String>> listOrdersToCust = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> listOrdersToCust = new ArrayList<>();
 
         try{
             orders = json.getJSONArray("orders");
+            if(orders==null){
+                Log.d("ORDERS","No hay registros en la BD");
+            }
 
             for(int i = 0; i < orders.length(); ++i){
                 JSONObject aux = orders.getJSONObject(i);
@@ -43,7 +47,7 @@ public class KCOASOrdersToCustomer extends AsyncTask<String, Integer, ArrayList<
                 String dateOrder = aux.getString(DATE);
                 String codeOrder = aux.getString(CODE_CUST);
 
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
 
                 map.put(ID, idOrder);
                 map.put(FOLIO, folioOrder);

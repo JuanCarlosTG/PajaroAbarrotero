@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/_fondo"
     tools:context="com.kreativeco.pjaroabarrotero.KCORegisterActivity">
-
+    <!--android:background="@drawable/_fondo"-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -48,6 +48,7 @@
             android:background="@drawable/_03camara"/>
         
         <EditText
+            android:id="@+id/shop_register"
             android:layout_width="500dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -56,6 +57,7 @@
             android:background="@drawable/_03nombre_tienda"/>
         
         <EditText
+            android:id="@+id/nameS_register"
             android:layout_width="500dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -64,6 +66,7 @@
             android:background="@drawable/_03nombre_tienda"/>
 
         <EditText
+            android:id="@+id/addr_register"
             android:layout_width="500dp"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
@@ -79,6 +82,7 @@
         </RelativeLayout>
 
         <ImageButton
+            android:id="@+id/register_btn"
             android:layout_width="500dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"

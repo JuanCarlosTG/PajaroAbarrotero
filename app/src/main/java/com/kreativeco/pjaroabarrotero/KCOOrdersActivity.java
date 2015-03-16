@@ -1,7 +1,9 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,7 +15,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kreativeco.pjaroabarrotero.libraries.KCOASOrdersToCustomer;
+import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class KCOOrdersActivity extends Activity {
@@ -21,7 +28,7 @@ public class KCOOrdersActivity extends Activity {
     ImageView redBar, blueBar, yellowBar, greenBar;
     ListView committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
     TextView totalCost, folio;
-    ImageButton sendOrderBtn, proofBtn;
+    ImageButton sendOrderBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +131,7 @@ public class KCOOrdersActivity extends Activity {
 
         return items;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -180,6 +188,27 @@ public class KCOOrdersActivity extends Activity {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
         registeredOredersList.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+                ArrayList<KCOListItems> items = new ArrayList<>();
+                for(Map<String, String> map : output){
+                    String tagID = map.get("id");
+                    Log.d("Values Received ID",tagID);
+                    String tagCode = map.get("code_customer");
+                    Log.d("Values Received FOLIO",tagCode);
+                    items.add(new KCOListItems(Long.parseLong(tagID),tagCode,"drawable/_07icono_canasta"));
+                }
+
+                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
+                registeredOredersList.setAdapter(customAdapter);
+                registeredOredersList.setOnItemClickListener(new DrawerView());
+
+            }
+        }).execute(userProfile.getString("Token", ""),"registered");
+
     }
 
     public void launchSend(View v)
@@ -187,6 +216,26 @@ public class KCOOrdersActivity extends Activity {
         hideButtons();
         yellowBar.setVisibility(View.VISIBLE);
         sendOrdersList.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+                ArrayList<KCOListItems> items = new ArrayList<>();
+                for(Map<String, String> map : output){
+                    String tagID = map.get("id");
+                    Log.d("Values Received ID",tagID);
+                    String tagCode = map.get("code_customer");
+                    Log.d("Values Received FOLIO",tagCode);
+                    items.add(new KCOListItems(Long.parseLong(tagID),tagCode,"drawable/_07icono_canasta"));
+                }
+
+                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
+                sendOrdersList.setAdapter(customAdapter);
+                sendOrdersList.setOnItemClickListener(new DrawerView());
+
+            }
+        }).execute(userProfile.getString("Token", ""),"sended");
     }
 
     public void launchDelivered(View v)
@@ -194,6 +243,29 @@ public class KCOOrdersActivity extends Activity {
         hideButtons();
         greenBar.setVisibility(View.VISIBLE);
         committedOrderList.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+                ArrayList<KCOListItems> items = new ArrayList<>();
+
+                for(Map<String, String> map : output){
+                    String tagName = map.get("id");
+                    Log.d("Values Received ID",tagName);
+                    String tagFolio = map.get("folio_number");
+                    Log.d("Values Received FOLIO",tagFolio);
+                    items.add(new KCOListItems(Long.parseLong(tagName),tagFolio,"drawable/_07icono_canasta"));
+                }
+
+                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
+                committedOrderList.setAdapter(customAdapter);
+                committedOrderList.setOnItemClickListener(new DrawerView());
+
+            }
+        }).execute(userProfile.getString("Token", ""),"received");
+
+
     }
 
     public void launchProductDetails()
