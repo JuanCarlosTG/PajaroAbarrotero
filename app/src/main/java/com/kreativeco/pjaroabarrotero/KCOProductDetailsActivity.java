@@ -1,9 +1,11 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.view.ViewGroup.LayoutParams;
@@ -32,6 +34,8 @@ public class KCOProductDetailsActivity extends Activity {
         customPiker.setWrapSelectorWheel(true);
 
         layoutPiker.addView(customPiker);
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(customPiker.getWindowToken(), 0);
 
     }
 

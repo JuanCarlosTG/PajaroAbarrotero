@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -18,7 +19,8 @@ import java.util.ArrayList;
 public class KCOMainDrawerActivity extends Activity {
 
     ImageView redBar, blueBar, yellowBar, greenBar;
-    private DrawerLayout leftDrawer;
+    ImageButton mainButton;
+    public DrawerLayout leftDrawer;
 
     private ListView leftListDrawer;
     @Override
@@ -31,6 +33,7 @@ public class KCOMainDrawerActivity extends Activity {
         yellowBar = (ImageView) findViewById(R.id.yellow_bar);
         greenBar = (ImageView) findViewById(R.id.green_bar);
         leftDrawer = (DrawerLayout) findViewById(R.id.mainDraweLayout);
+        mainButton = (ImageButton) findViewById(R.id.menu_button_catalogue);
 
         this.leftListDrawer = (ListView)findViewById(R.id.left_drawer);
 
@@ -188,4 +191,8 @@ public class KCOMainDrawerActivity extends Activity {
         Intent launchActivity = new Intent(KCOMainDrawerActivity.this, KCOOrdersActivity.class);
         startActivity(launchActivity);
     }
+
+    //public void openMenu(){
+    //    leftDrawer.openDrawer(leftDrawer);
+    //}
 }

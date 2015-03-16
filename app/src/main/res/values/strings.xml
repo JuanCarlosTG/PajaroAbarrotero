@@ -53,6 +53,7 @@
     <string name="title_register">Registro</string>
     <string name="title_profile">Mi Perfil</string>
     <string name="title_orders">Pedidos</string>
+    <string name="title_productS">Productos</string>
 
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
