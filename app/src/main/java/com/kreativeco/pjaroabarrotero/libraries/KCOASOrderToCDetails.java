@@ -33,7 +33,7 @@ public class KCOASOrderToCDetails extends AsyncTask<String, Integer, ArrayList<H
         KCOUserFunctions userFun = new KCOUserFunctions();
         JSONObject json = userFun.getOrdersToCustDetail(params[0],params[1]);
 
-        ArrayList<HashMap<String, String>> listOrdersToCDetails = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> listOrdersToCDetails = new ArrayList<>();
 
         try{
             orders = json.getJSONArray("order");
@@ -51,7 +51,7 @@ public class KCOASOrderToCDetails extends AsyncTask<String, Integer, ArrayList<H
                 String codeCodOrder = aux.getString(COD);
                 String codeNameOrder = aux.getString(NAME);
 
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
 
                 map.put(ID, idOrder);
                 map.put(FOLIO, folioOrder);

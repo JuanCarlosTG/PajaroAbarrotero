@@ -5,3 +5,4 @@
     android:background="@drawable/_01_splash_prop"
     tools:context="com.kreativeco.pjaroabarrotero.KCOSplashActivity">
 </RelativeLayout>
+    <!--android:background="@drawable/_01_splash_prop"-->

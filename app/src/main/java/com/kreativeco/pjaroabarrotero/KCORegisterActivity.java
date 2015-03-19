@@ -1,8 +1,13 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
+import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,20 +37,120 @@ public class KCORegisterActivity extends Activity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
-    ImageButton cameraBtn;
+    ImageButton cameraBtn,registerBtn;
+    EditText shop,name,address;
+    LocationManager locationManager = null;
+    String latitud,longitud;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcoregister);
 
+        shop = (EditText)findViewById(R.id.shop_register);
+        name = (EditText)findViewById(R.id.nameS_register);
+        address = (EditText)findViewById(R.id.addr_register);
+
         cameraBtn = (ImageButton)findViewById(R.id.camera_button);
         cameraBtn.setOnClickListener(cameraListener);
+
+        registerBtn = (ImageButton)findViewById(R.id.register_btn);
+        registerBtn.setOnClickListener(registerListener);
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                UpdatePosition(location);
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
+        UpdatePosition();
+    }
+
+    private void UpdatePosition(){
+        Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        UpdatePosition(loc);
+    }
+
+    private void UpdatePosition(Location location){
+        if(location!=null){
+            latitud = Double.toString(location.getLatitude());
+            longitud = Double.toString(location.getLongitude());
+            Log.d("Coordenadas",latitud);
+            Log.d("Coordenadas",longitud);
+        }
     }
 
     private OnClickListener cameraListener = new OnClickListener()
     {
         public void onClick(View view){
             dispatchTakePictureIntent(view);
+        }
+    };
+
+    private void createMessageRegisterOK(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(KCORegisterActivity.this);
+        builder.setMessage(R.string.message_registerOK).setTitle(R.string.title_register);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent launchActivity = new Intent(KCORegisterActivity.this, KCOLoginActivity.class);
+                startActivity(launchActivity);
+                finish();
+            }
+        });
+
+        AlertDialog dialogResetOk = builder.create();
+        dialogResetOk.show();
+    }
+
+    private OnClickListener registerListener = new OnClickListener()
+    {
+        public void onClick(View view){
+            String opt="1";
+            new KCOASWS(new KCOAsyncResponseG() {
+                @Override
+                public void processFinishG(JSONObject json) {
+                    if (json!=null && json.length() > 0){
+                        try {
+                            //Obtenemos del JSON los datos
+                            String message = json.getString("message");
+                            JSONObject profile = json.getJSONObject("profile");
+                            String username = profile.getString("username");
+
+                            //Debug
+                            Log.d("Message", "Message : " + message);
+                            Log.d("UserName", "Token : " + username);
+
+                            createMessageRegisterOK();
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Log.d("REGISTER","Token No Válido");
+                        //METHOD ALERT
+                    }
+                }
+            }).execute(opt, shop.getText().toString(), name.getText().toString(),address.getText().toString(),latitud,longitud);
         }
     };
 

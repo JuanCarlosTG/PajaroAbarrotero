@@ -28,7 +28,7 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
         KCOUserFunctions userFun = new KCOUserFunctions();
         JSONObject json = userFun.getProductsToCat(params[0],params[1]);
 
-        ArrayList<HashMap<String, String>> listProductsToCat = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> listProductsToCat = new ArrayList<>();
 
         try{
             products = json.getJSONArray("products");
@@ -41,7 +41,7 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
                 String codProduct = aux.getString(COD);
                 String ivaProduct = aux.getString(IVA);
 
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
 
                 map.put(NAME, nameProduct);
                 map.put(ID, idProduct);
