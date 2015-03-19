@@ -13,9 +13,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by kreativeco on 06/03/15.
- */
 public class KCOListAdapterToOrder extends BaseAdapter {
     protected Activity activity;
     protected ArrayList<KCOListItems> items;
@@ -42,6 +39,7 @@ public class KCOListAdapterToOrder extends BaseAdapter {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
     @Override
     public View getView(int position, View contentView, ViewGroup parent) {
         View vi=contentView;
