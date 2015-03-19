@@ -1,7 +1,6 @@
 package com.kreativeco.pjaroabarrotero.libraries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -102,12 +101,13 @@ public class KCOUserFunctions {
     }
 
 
-    public JSONObject addOrder(String token, String[] jsonOrder){
+    public JSONObject addOrder(String token, String jsonOrder){
         // Construimos los parametros
         List<NameValuePair> parametros = new ArrayList<>();
         parametros.add(new BasicNameValuePair("task", etiqueta_addO));
         parametros.add(new BasicNameValuePair("token", token));
-        parametros.add(new BasicNameValuePair("json", Arrays.toString(jsonOrder)));
+        //parametros.add(new BasicNameValuePair("json", Arrays.toString(jsonOrder)));
+        parametros.add(new BasicNameValuePair("json", jsonOrder));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
         // return json
         Log.d("JSON", json.toString());
