@@ -28,6 +28,7 @@ public class KCOLoginActivity extends Activity {
 
         user = (EditText) findViewById(R.id.user);
         pass = (EditText) findViewById(R.id.password);
+
     }
 
     @Override

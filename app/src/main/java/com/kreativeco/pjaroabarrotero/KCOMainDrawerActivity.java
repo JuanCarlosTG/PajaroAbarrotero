@@ -32,6 +32,7 @@ public class KCOMainDrawerActivity extends Activity {
         blueBar = (ImageView) findViewById(R.id.blue_bar);
         yellowBar = (ImageView) findViewById(R.id.yellow_bar);
         greenBar = (ImageView) findViewById(R.id.green_bar);
+
         leftDrawer = (DrawerLayout) findViewById(R.id.mainDraweLayout);
         mainButton = (ImageButton) findViewById(R.id.menu_button_catalogue);
 
@@ -61,6 +62,7 @@ public class KCOMainDrawerActivity extends Activity {
     private void selectItem(int position){
         switch (position){
             case 0:
+                leftDrawer.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 1:
@@ -71,31 +73,47 @@ public class KCOMainDrawerActivity extends Activity {
                 leftDrawer.closeDrawers();
                 break;
             case 3:
+                launchPersonalCare();
                 Log.i("posicion sleccionada", String.valueOf(position));
+                leftDrawer.closeDrawers();
                 break;
             case 4:
+                launchHome();
+                leftDrawer.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 5:
+                launchFoods();
+                leftDrawer.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 6:
+                launchOthers();
+                leftDrawer.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 7:
                 launchOrders();
-                leftDrawer.closeDrawers();
+                finish();
                 break;
             case 8:
+                launchOrders();
+                finish();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 9:
+                launchOrders();
+                finish();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 10:
+                launchOrders();
+                finish();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 11:
+                launchOrders();
+                finish();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
 
@@ -107,7 +125,7 @@ public class KCOMainDrawerActivity extends Activity {
 
     private ArrayList<KCOListItems>getItems(){
 
-        ArrayList<KCOListItems> items = new ArrayList<KCOListItems>();
+        ArrayList<KCOListItems> items = new ArrayList<>();
 
         items.add(new KCOListItems(1, "MENÚ", "drawable/_05backtitle"));
         items.add(new KCOListItems(2, "Mi Perfil", "drawable/_05backtitle"));
@@ -122,20 +140,21 @@ public class KCOMainDrawerActivity extends Activity {
         items.add(new KCOListItems(11, "drawable/_05_7enviados"));
         items.add(new KCOListItems(12, "drawable/_05_8entregados"));
 
-
         return items;
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_kcomain_drawer, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -149,7 +168,8 @@ public class KCOMainDrawerActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void hideButtons(){
+    public void hideButtons()
+    {
         redBar.setVisibility(View.INVISIBLE);
         blueBar.setVisibility(View.INVISIBLE);
         yellowBar.setVisibility(View.INVISIBLE);
@@ -162,7 +182,19 @@ public class KCOMainDrawerActivity extends Activity {
         redBar.setVisibility(View.VISIBLE);
     }
 
+    public void launchPersonalCare()
+    {
+        hideButtons();
+        redBar.setVisibility(View.VISIBLE);
+    }
+
     public void launchHome(View v)
+    {
+        hideButtons();
+        blueBar.setVisibility(View.VISIBLE);
+    }
+
+    public void launchHome()
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
@@ -174,7 +206,19 @@ public class KCOMainDrawerActivity extends Activity {
         yellowBar.setVisibility(View.VISIBLE);
     }
 
+    public void launchFoods()
+    {
+        hideButtons();
+        yellowBar.setVisibility(View.VISIBLE);
+    }
+
     public void launchOthers(View v)
+    {
+        hideButtons();
+        greenBar.setVisibility(View.VISIBLE);
+    }
+
+    public void launchOthers()
     {
         hideButtons();
         greenBar.setVisibility(View.VISIBLE);
@@ -192,7 +236,7 @@ public class KCOMainDrawerActivity extends Activity {
         startActivity(launchActivity);
     }
 
-    //public void openMenu(){
-    //    leftDrawer.openDrawer(leftDrawer);
-    //}
+    public void openDrawer(View v){
+        leftDrawer.openDrawer(leftListDrawer);
+    }
 }

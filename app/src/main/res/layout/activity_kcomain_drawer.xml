@@ -26,7 +26,8 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:id="@+id/menu_button_catalogue"
-                    android:background="@drawable/catalogo"/>
+                    android:background="@drawable/catalogo"
+                    android:onClick="openDrawer"/>
                     <!--android:onClick="openMenu"-->/>
 
                 <TextView
