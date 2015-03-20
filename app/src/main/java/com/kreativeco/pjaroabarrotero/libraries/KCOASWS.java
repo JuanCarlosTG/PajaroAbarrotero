@@ -37,8 +37,8 @@ public class KCOASWS extends AsyncTask<String, Integer, JSONObject> {
                 json = userFun.getProduct(params[1],params[2]);
                 break;
             case 5:
-                String[] param2=new String[]{params[2]};
-                json = userFun.addOrder(params[1],param2);
+                //String[] param2=new String[]{params[2]};
+                json = userFun.addOrder(params[1],params[2]);
                 break;
             default:
                 //??
