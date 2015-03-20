@@ -186,6 +186,16 @@
                 </LinearLayout>
 
             </HorizontalScrollView>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:columnCount="3"
+                >
+                </GridLayout>
 
         </RelativeLayout>
     </FrameLayout>

@@ -21,6 +21,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
 
@@ -33,7 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class KCORegisterActivity extends Activity {
+public class KCORegisterActivity extends Activity implements OnMapReadyCallback {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
@@ -55,6 +62,9 @@ public class KCORegisterActivity extends Activity {
 
         registerBtn = (ImageButton)findViewById(R.id.register_btn);
         registerBtn.setOnClickListener(registerListener);
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.bird_map);
+        mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
@@ -201,16 +211,6 @@ public class KCORegisterActivity extends Activity {
         }*/
     }
 
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageButton registerPhotoBtn = (ImageButton)findViewById(R.id.camera_button);
-            registerPhotoBtn.setImageBitmap(imageBitmap);
-            //mImageView.setImageBitmap(imageBitmap);
-        }
-    }*/
-
     private void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
@@ -239,5 +239,21 @@ public class KCORegisterActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LatLng myShop = new LatLng(loc.getLatitude(), loc.getLongitude());
+            map.setMyLocationEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myShop, 17));
+
+            map.addMarker(new MarkerOptions()
+                    .title("MI Tienda")
+                    .snippet("Pajaro abarrotero")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable._04pin))
+                    .draggable(true)
+                    .position(myShop));
     }
 }

@@ -46,7 +46,6 @@
     <string name="title_activity_kcoorders">KCOOrdersActivity</string>
     <string name="title_activity_kcoorder_details">KCOOrderDetailsActivity</string>
     <string name="title_activity_kcoproduct_details">KCOProductDetailsActivity</string>
-
     <string name="title_menu">MENÚ</string>
     <string name="title_catalogue">Catálogo</string>
     <string name="title_product_details">Detalles Del Producto</string>
@@ -54,7 +53,6 @@
     <string name="title_profile">Mi Perfil</string>
     <string name="title_orders">Pedidos</string>
     <string name="title_productS">Productos</string>
-
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
     <string name="message_registerOK">Se ha registrado exitosamente. Debe logearse</string>
@@ -62,5 +60,6 @@
     <string name="send">Enviar</string>
     <string name="title_reset_password">Escribe tu nombre de usuario y te enviaremos tu nueva contraseña</string>
     <string name="welcome">Bienvenid@</string>
+    <string name="title_activity_example_map">ExampleMap</string>
 
 </resources>
