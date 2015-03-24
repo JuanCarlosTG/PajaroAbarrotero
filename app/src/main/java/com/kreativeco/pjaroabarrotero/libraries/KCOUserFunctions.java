@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
 
@@ -34,9 +35,22 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("username", username));
         parametros.add(new BasicNameValuePair("password", password));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject addProfile(String shop,String name, String address, String latitud,String longitud){
@@ -49,9 +63,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("latitude", latitud));
         parametros.add(new BasicNameValuePair("longitude", longitud));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject recoverPass(String username){
@@ -60,9 +86,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("task", etiqueta_recPass));
         parametros.add(new BasicNameValuePair("username", username));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject getProfile(String token){
@@ -71,9 +109,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("task", etiqueta_getP));
         parametros.add(new BasicNameValuePair("token", token));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject getProductsToCat(String token, String catID){
@@ -83,9 +133,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("categorys_id", catID));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject getProduct(String token, String codP){
@@ -95,9 +157,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("cod", codP));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
 
@@ -109,9 +183,21 @@ public class KCOUserFunctions {
         //parametros.add(new BasicNameValuePair("json", Arrays.toString(jsonOrder)));
         parametros.add(new BasicNameValuePair("json", jsonOrder));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
 
@@ -122,9 +208,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("status", status));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
     public JSONObject getOrdersToCustDetail(String token, String folio){
@@ -134,9 +232,21 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("folio_number", folio));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
-        // return json
-        Log.d("JSON", json.toString());
-        return json;
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
     }
 
 }

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.kreativeco.pjaroabarrotero.KCORegisterActivity">
     <!--android:background="@drawable/_fondo"-->
     <RelativeLayout
@@ -54,6 +55,15 @@
             android:layout_height="200dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/_03camara"/>
+
+        <ImageView
+            android:id="@+id/imgPreview"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            />
+
 
         <EditText
             android:id="@+id/shop_register"

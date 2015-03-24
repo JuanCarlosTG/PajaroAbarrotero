@@ -63,4 +63,9 @@
     <string name="title_activity_example_map">ExampleMap</string>
     <string name="title_activity_example_table">ExampleTable</string>
 
+    <string name="message_serviceNoOk">Falla de Conexión a Servidor. Intente de nuevo</string>
+    <string name="title_serviceNoOK">Conexión fallida</string>
+    <string name="message_loginNoOk">Nombre de usuario o contraseña no válido</string>
+    <string name="title_loginNoOK">Login</string>
+
 </resources>

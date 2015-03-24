@@ -25,6 +25,7 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,6 +41,7 @@ import com.kreativeco.pjaroabarrotero.libraries.Config;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -49,6 +51,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+
 
 
 import java.io.File;
@@ -80,6 +83,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
 
     private Uri fileUri; // file url to store image/video
 
+    private ImageView imgPreview;
     private ImageButton btnCapturePicture;
 
 
@@ -123,6 +127,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
         UpdatePosition();
 
+        imgPreview = (ImageView) findViewById(R.id.imgPreview);
         btnCapturePicture = (ImageButton) findViewById(R.id.camera_button);
 
         btnCapturePicture.setOnClickListener(new View.OnClickListener() {
@@ -225,7 +230,8 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 8;
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),options);
-            btnCapturePicture.setImageBitmap(bitmap);
+            imgPreview.setImageBitmap(bitmap);
+            //btnCapturePicture.setImageResource(Integer.parseInt(fileUri.getPath()));
             foto = fileUri.getPath();
             file = new File(foto);
         } catch (NullPointerException e) {
@@ -389,35 +395,6 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         AlertDialog dialogResetOk = builder.create();
         dialogResetOk.show();
     }
-
-    /*private OnClickListener registerListener = new OnClickListener()
-    {
-        public void onClick(View view){
-            String opt="1";
-            new KCOASWS(new KCOAsyncResponseG() {
-                @Override
-                public void processFinishG(JSONObject json) {
-                    if (json!=null && json.length() > 0){
-                        try {
-                            //Obtenemos del JSON los datos
-                            String message = json.getString("message");
-                            JSONObject profile = json.getJSONObject("profile");
-                            String username = profile.getString("username");
-                            //Debug
-                            Log.d("Message", "Message : " + message);
-                            Log.d("UserName", "Token : " + username);
-                            createMessageRegisterOK();
-                        }catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
-                        Log.d("REGISTER","Token No Válido");
-                        //METHOD ALERT
-                    }
-                }
-            }).execute(opt, shop.getText().toString(), name.getText().toString(),address.getText().toString(),latitud,longitud);
-        }
-    };*/
 
     private File createImageFile() throws IOException {
         // Create an image file name
