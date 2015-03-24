@@ -1,7 +1,9 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -13,7 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.kreativeco.pjaroabarrotero.libraries.Config;
+import com.kreativeco.pjaroabarrotero.libraries.KCOASProductsToCategory;
+import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class KCOMainDrawerActivity extends Activity {
@@ -180,6 +188,29 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+
+                if(output!=null) {
+                    //ArrayList<KCOListItems> items = new ArrayList<>();
+                    for (Map<String, String> map : output) {
+                        String tagID = map.get("id");
+                        Log.d("Values Received ID", tagID);
+                        String tagCod = map.get("cod");
+                        Log.d("Values Received COD", tagCod);
+                        String tagName = map.get("name");
+                        Log.d("Values Received NAME", tagName);
+                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
+                    }
+                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
+                }else{
+                    Log.d("Products To Category","Status 0");
+                }
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_CUIDADO_PERSONAL);
     }
 
     public void launchPersonalCare()
@@ -192,6 +223,29 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+
+                if(output!=null) {
+                    //ArrayList<KCOListItems> items = new ArrayList<>();
+                    for (Map<String, String> map : output) {
+                        String tagID = map.get("id");
+                        Log.d("Values Received ID", tagID);
+                        String tagCod = map.get("cod");
+                        Log.d("Values Received COD", tagCod);
+                        String tagName = map.get("name");
+                        Log.d("Values Received NAME", tagName);
+                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
+                    }
+                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
+                }else{
+                    Log.d("Products To Category","Status 0");
+                }
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_HOGAR);
     }
 
     public void launchHome()
@@ -204,6 +258,29 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         yellowBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+
+                if(output!=null) {
+                    //ArrayList<KCOListItems> items = new ArrayList<>();
+                    for (Map<String, String> map : output) {
+                        String tagID = map.get("id");
+                        Log.d("Values Received ID", tagID);
+                        String tagCod = map.get("cod");
+                        Log.d("Values Received COD", tagCod);
+                        String tagName = map.get("name");
+                        Log.d("Values Received NAME", tagName);
+                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
+                    }
+                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
+                }else{
+                    Log.d("Products To Category","Status 0");
+                }
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_ALIMENTOS);
     }
 
     public void launchFoods()
@@ -216,6 +293,29 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         greenBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+
+                if(output!=null) {
+                    //ArrayList<KCOListItems> items = new ArrayList<>();
+                    for (Map<String, String> map : output) {
+                        String tagID = map.get("id");
+                        Log.d("Values Received ID", tagID);
+                        String tagCod = map.get("cod");
+                        Log.d("Values Received COD", tagCod);
+                        String tagName = map.get("name");
+                        Log.d("Values Received NAME", tagName);
+                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
+                    }
+                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
+                }else{
+                    Log.d("Products To Category","Status 0");
+                }
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_OTROS);
     }
 
     public void launchOthers()

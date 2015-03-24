@@ -157,7 +157,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/red_bar"
                         android:background="@drawable/_06_1cuidado_barra"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible"
+                        android:onClick="launchPersonalCare"/>
 
                     <ImageView
                         android:layout_width="149dp"
@@ -165,7 +166,8 @@
                         android:id="@+id/blue_bar"
                         android:background="@drawable/_06_2hogar_barra"
                         android:layout_marginLeft="3dp"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible"
+                        android:onClick="launchHome"/>
 
                     <ImageView
                         android:layout_width="149dp"
@@ -173,7 +175,8 @@
                         android:id="@+id/yellow_bar"
                         android:background="@drawable/_06_3alimentos_barra"
                         android:layout_marginLeft="2dp"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible"
+                        android:onClick="launchFoods"/>
 
                     <ImageView
                         android:layout_width="149dp"
@@ -181,7 +184,8 @@
                         android:id="@+id/green_bar"
                         android:background="@drawable/_06_4otros_barra"
                         android:layout_marginLeft="1dp"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible"
+                        android:onClick="launchOthers"/>
 
                 </LinearLayout>
 

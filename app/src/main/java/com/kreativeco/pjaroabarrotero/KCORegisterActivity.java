@@ -34,7 +34,6 @@ import com.kreativeco.pjaroabarrotero.libraries.Config;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -116,12 +115,6 @@ public class KCORegisterActivity extends Activity {
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
         UpdatePosition();
-
-        //cameraBtn = (ImageButton)findViewById(R.id.camera_button);
-        //cameraBtn.setOnClickListener(cameraListener);
-
-        //registerBtn = (ImageButton)findViewById(R.id.register_btn);
-        //registerBtn.setOnClickListener(registerListener);
 
         imgPreview = (ImageView) findViewById(R.id.imgPreview);
         btnCapturePicture = (ImageButton) findViewById(R.id.camera_button);
@@ -227,6 +220,7 @@ public class KCORegisterActivity extends Activity {
             options.inSampleSize = 8;
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),options);
             imgPreview.setImageBitmap(bitmap);
+            //btnCapturePicture.setImageResource(Integer.parseInt(fileUri.getPath()));
             foto = fileUri.getPath();
             file = new File(foto);
         } catch (NullPointerException e) {
@@ -376,38 +370,6 @@ public class KCORegisterActivity extends Activity {
         AlertDialog dialogResetOk = builder.create();
         dialogResetOk.show();
     }
-
-    /*private OnClickListener registerListener = new OnClickListener()
-    {
-        public void onClick(View view){
-            String opt="1";
-            new KCOASWS(new KCOAsyncResponseG() {
-                @Override
-                public void processFinishG(JSONObject json) {
-                    if (json!=null && json.length() > 0){
-                        try {
-                            //Obtenemos del JSON los datos
-                            String message = json.getString("message");
-                            JSONObject profile = json.getJSONObject("profile");
-                            String username = profile.getString("username");
-
-                            //Debug
-                            Log.d("Message", "Message : " + message);
-                            Log.d("UserName", "Token : " + username);
-
-                            createMessageRegisterOK();
-
-                        }catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
-                        Log.d("REGISTER","Token No Válido");
-                        //METHOD ALERT
-                    }
-                }
-            }).execute(opt, shop.getText().toString(), name.getText().toString(),address.getText().toString(),latitud,longitud);
-        }
-    };*/
 
     private File createImageFile() throws IOException {
         // Create an image file name

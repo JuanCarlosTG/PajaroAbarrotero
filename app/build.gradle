@@ -43,4 +43,5 @@ dependencies {
     compile fileTree(include: 'Parse-*.jar', dir: 'libs')
     compile fileTree(include: 'ParseCrashReporting-*.jar', dir: 'libs')
     compile files('libs/httpmime-4.2.5.jar')
+    compile 'com.google.android.gms:play-services:7.0.0'
 }

@@ -2,6 +2,7 @@ package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
 
@@ -29,7 +31,8 @@ public class KCOLoginActivity extends Activity {
     private View alertViewReset;
     private String newPass="";
     EditText user,pass;
-    String opt="";
+
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,10 @@ public class KCOLoginActivity extends Activity {
 
         user = (EditText) findViewById(R.id.user);
         pass = (EditText) findViewById(R.id.password);
+
+        pDialog = new ProgressDialog(KCOLoginActivity.this);
+        pDialog.setMessage("Por favor espere..." );
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         createDialogResetPass();
     }
@@ -65,42 +72,57 @@ public class KCOLoginActivity extends Activity {
 
     public void launchMainMenuActivity(View v)
     {
-        opt="0";
+        pDialog.show();
+
         new KCOASWS(new KCOAsyncResponseG() {
             @Override
             public void processFinishG(JSONObject json) {
               if (json!=null && json.length() > 0){
                 try {
-                    //Se crea la estructura que contendrá toda la información del token
-                    SharedPreferences tokenUser = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = tokenUser.edit();
+                    String status = json.getString("status");
+                    if(Integer.parseInt(status)==1){
+                        //Se crea la estructura que contendrá toda la información del token
+                        SharedPreferences tokenUser = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = tokenUser.edit();
 
-                    //Obtenemos del JSON los datos
-                    String message = json.getString("message");
-                    String token = json.getString("token");
+                        //Obtenemos del JSON los datos
+                        String message = json.getString("message");
+                        String token = json.getString("token");
 
-                    //Almacenamos los datos del JSON en la estructura
-                    editor.putString("Message", message);
-                    editor.putString("Token", token);
-                    editor.commit();
+                        //Almacenamos los datos del JSON en la estructura
+                        editor.putString("Message", message);
+                        editor.putString("Token", token);
+                        editor.commit();
 
-                    //Debug
-                    Log.d("Login", "Message : " + message);
-                    Log.d("Token", "Token : " + token);
+                        //Debug
+                        Log.d("Login", "Message : " + message);
+                        Log.d("Token", "Token : " + token);
+                        pDialog.dismiss();
 
-                    Intent launchActivity = new Intent(KCOLoginActivity.this, KCOMainDrawerActivity.class);
-                    startActivity(launchActivity);
-                    finish();
-                    Log.d("Login","Complete Process To Login");
+                        Intent launchActivity = new Intent(KCOLoginActivity.this, KCOMainDrawerActivity.class);
+                        startActivity(launchActivity);
+                        finish();
+                        Log.d("Login","Complete Process To Login");
+                    }else if(Integer.parseInt(status)==0){
+                        Log.d("Login","Status 0");
+                        pDialog.dismiss();
+                        createMessageLoginNoOk();
+                    } else if(Integer.parseInt(status)==-1){
+                        Log.d("Login","Status -1");
+                        pDialog.dismiss();
+                        createMessageServiceNoOk();
+                    }
                 }catch (JSONException e) {
                     e.printStackTrace();
+                    createMessageServiceNoOk();
                 }
             }else{
-                Log.d("LOGIN","Estatus 0 no logeado");
-                  //METHOD ALERT
+                Log.d("LOGIN","Estatus -1 Conexión Interrumpida");
+                pDialog.dismiss();
+                createMessageServiceNoOk();
             }
            }
-        }).execute(opt, user.getText().toString(), pass.getText().toString());
+        }).execute(Config.WS_LOGIN, user.getText().toString(), pass.getText().toString());
 
     }
 
@@ -135,31 +157,40 @@ public class KCOLoginActivity extends Activity {
                 final String email = t_email.getText().toString();
 
                 if(checkEmailReset(email)){
-                    opt="2";
+
+                    pDialog.show();
                     new KCOASWS(new KCOAsyncResponseG() {
                         @Override
                         public void processFinishG(JSONObject json) {
                             if (json!=null && json.length() > 0){
                                 try {
-                                    //Obtenemos del JSON los datos
-                                    String message = json.getString("message");
-                                    newPass = json.getString("password");
+                                    String status = json.getString("status");
+                                    if(Integer.parseInt(status)==1){
+                                        //Obtenemos del JSON los datos
+                                        String message = json.getString("message");
+                                        newPass = json.getString("password");
 
-                                    //Debug
-                                    Log.d("RESET PASS", "Message : " + message);
-                                    Log.d("RESET PASS", "PASSWD : " + newPass);
+                                        //Debug
+                                        Log.d("RESET PASS", "Message : " + message);
+                                        Log.d("RESET PASS", "PASSWD : " + newPass);
 
-                                    createMessageNewPass(email);
-
+                                        pDialog.dismiss();
+                                        createMessageNewPass(email);
+                                    }else{
+                                        Log.d("RESET PASS","Status 0");
+                                        pDialog.dismiss();
+                                        createMessageServiceNoOk();
+                                    }
                                 }catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }else{
-                                Log.d("RESET PASS","Estatus Token no valido");
-                                //METHOD ALERT
+                                Log.d("RESET PASS","Estatus: Falla de Conexión a Internet");
+                                pDialog.dismiss();
+                                createMessageServiceNoOk();
                             }
                         }
-                    }).execute(opt, email);
+                    }).execute(Config.WS_RECOVER_PASS, email);
                 }else{
                     err_resetEmail();
                 }
@@ -198,6 +229,36 @@ public class KCOLoginActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 user.setText(username);
                 pass.setText(newPass);
+            }
+        });
+
+        AlertDialog dialogResetOk = builder.create();
+        dialogResetOk.show();
+    }
+
+    private void createMessageServiceNoOk(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(KCOLoginActivity.this);
+        builder.setMessage(R.string.message_serviceNoOk).setTitle(R.string.title_serviceNoOK);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialogResetOk = builder.create();
+        dialogResetOk.show();
+    }
+
+    private void createMessageLoginNoOk(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(KCOLoginActivity.this);
+        builder.setMessage(R.string.message_loginNoOk).setTitle(R.string.title_loginNoOK);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
 

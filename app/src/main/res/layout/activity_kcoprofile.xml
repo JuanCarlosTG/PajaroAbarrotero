@@ -66,6 +66,7 @@
         <EditText
             android:layout_width="500dp"
             android:layout_height="50dp"
+            android:id="@+id/contact"
             android:layout_marginTop="10dp"
             android:hint="@string/my_name"
             android:gravity="center"
@@ -74,6 +75,7 @@
         <EditText
             android:layout_width="500dp"
             android:layout_height="100dp"
+            android:id="@+id/address"
             android:layout_marginTop="10dp"
             android:hint="@string/address"
             android:gravity="center"
