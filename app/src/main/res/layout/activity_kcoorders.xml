@@ -194,7 +194,8 @@
                 android:layout_marginTop="120dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="12dp"
+                android:id="@+id/list_views_rl">
 
                 <ListView android:id="@+id/list_orders_details"
                     android:layout_width="match_parent"
@@ -250,7 +251,7 @@
                     android:layout_marginBottom="63dp"
                     android:visibility="visible"
                     android:textSize="25dp"
-                    android:text="Total: $ 5550.70"/>
+                    android:text="Total: $ 0"/>
 
                 <TextView
                     style="@style/CodeFontBlack"

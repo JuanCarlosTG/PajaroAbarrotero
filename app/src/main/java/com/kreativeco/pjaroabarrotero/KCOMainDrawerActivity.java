@@ -2,9 +2,11 @@ package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,17 +28,32 @@ public class KCOMainDrawerActivity extends Activity {
     ImageView redBar, blueBar, yellowBar, greenBar;
     ImageButton mainButton;
     public DrawerLayout leftDrawer;
-
     private ListView leftListDrawer;
+    TableLayout careTable, homeTable, foodTable, othersTable;
+    ScrollView careScroll, homeScroll, foodScroll, othersScroll ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcomain_drawer);
 
+        /* Tab Buttons*/
         redBar = (ImageView) findViewById(R.id.red_bar);
         blueBar = (ImageView) findViewById(R.id.blue_bar);
         yellowBar = (ImageView) findViewById(R.id.yellow_bar);
         greenBar = (ImageView) findViewById(R.id.green_bar);
+
+        /*Scrolls for tables*/
+        homeScroll = (ScrollView) findViewById(R.id.home_scroll);
+        careScroll = (ScrollView) findViewById(R.id.care_scroll);
+        foodScroll = (ScrollView) findViewById(R.id.food_scroll);
+        othersScroll = (ScrollView) findViewById(R.id.others_scroll);
+
+        /*Tables*/
+        careTable = (TableLayout) findViewById(R.id.care_table);
+        homeTable = (TableLayout) findViewById(R.id.home_table);
+        foodTable = (TableLayout) findViewById(R.id.food_table);
+        othersTable = (TableLayout) findViewById(R.id.others_table);
 
         leftDrawer = (DrawerLayout) findViewById(R.id.mainDraweLayout);
         mainButton = (ImageButton) findViewById(R.id.menu_button_catalogue);
@@ -45,6 +67,8 @@ public class KCOMainDrawerActivity extends Activity {
         leftListDrawer.setAdapter(customaAdapter);
 
         leftListDrawer.setOnItemClickListener(new DrawerView());
+
+        deployButtons(14, careTable);
 
         /*final String[] options = getResources().getStringArray(R.array.StringsDrawerList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
@@ -68,6 +92,7 @@ public class KCOMainDrawerActivity extends Activity {
             case 1:
                 launchProfile();
                 leftDrawer.closeDrawers();
+                finish();
                 break;
             case 2:
                 leftDrawer.closeDrawers();
@@ -174,53 +199,69 @@ public class KCOMainDrawerActivity extends Activity {
         blueBar.setVisibility(View.INVISIBLE);
         yellowBar.setVisibility(View.INVISIBLE);
         greenBar.setVisibility(View.INVISIBLE);
+        careScroll.setVisibility(View.INVISIBLE);
+        homeScroll.setVisibility(View.INVISIBLE);
+        foodScroll.setVisibility(View.INVISIBLE);
+        othersScroll.setVisibility(View.INVISIBLE);
     }
 
     public void launchPersonalCare(View v)
     {
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
+        careScroll.setVisibility(View.VISIBLE);
     }
 
     public void launchPersonalCare()
     {
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
+        careScroll.setVisibility(View.VISIBLE);
     }
 
     public void launchHome(View v)
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
+        homeTable.removeAllViews();
+        homeScroll.setVisibility(View.VISIBLE);
+        deployButtons(10, homeTable);
     }
 
     public void launchHome()
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
+        homeTable.removeAllViews();
+        homeScroll.setVisibility(View.VISIBLE);
+        deployButtons(10, homeTable);
     }
 
     public void launchFoods(View v)
     {
         hideButtons();
+        foodScroll.setVisibility(View.VISIBLE);
         yellowBar.setVisibility(View.VISIBLE);
     }
 
     public void launchFoods()
     {
         hideButtons();
+        foodScroll.setVisibility(View.VISIBLE);
         yellowBar.setVisibility(View.VISIBLE);
     }
 
     public void launchOthers(View v)
     {
         hideButtons();
+        othersScroll.setVisibility(View.VISIBLE);
         greenBar.setVisibility(View.VISIBLE);
     }
 
     public void launchOthers()
     {
         hideButtons();
+        othersScroll.setVisibility(View.VISIBLE);
         greenBar.setVisibility(View.VISIBLE);
     }
 
@@ -238,5 +279,55 @@ public class KCOMainDrawerActivity extends Activity {
 
     public void openDrawer(View v){
         leftDrawer.openDrawer(leftListDrawer);
+    }
+
+    private void deployButtons(int elementos, TableLayout catalogueTable) {
+        int NUM_ROW;
+        if(elementos % 3 == 0){
+            NUM_ROW = elementos/3;
+        }
+        else NUM_ROW = (elementos/3) +1;
+
+        int category_count = 12;
+        int NUM_COL = category_count/4;
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for(int row = 0; row<NUM_ROW; row++){
+            TableRow myRow = new TableRow(this);
+            myRow.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.MATCH_PARENT
+            ));
+            for(int col = 0; col<NUM_COL; col++){
+                RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.row_item, null);
+                // Modify inflated layout
+                if((elementos % 3 == 1) && (col == 1 || col ==2) && (row == NUM_ROW-1) )
+                {
+                    ImageButton img = (ImageButton) rl.findViewById(R.id.img);
+                    img.setBackgroundColor(Color.TRANSPARENT);
+                    // Add the modified layout to the row
+                    myRow.addView(rl);
+                }
+                else if((elementos % 3 == 2) && (col == 2) && (row == NUM_ROW - 1) )
+                {
+                    ImageButton img = (ImageButton) rl.findViewById(R.id.img);
+                    img.setBackgroundColor(Color.TRANSPARENT);
+                    // Add the modified layout to the row
+                    myRow.addView(rl);
+                }
+
+                else{
+
+                    ImageButton img = (ImageButton) rl.findViewById(R.id.img);
+                    TextView tv = (TextView) rl.findViewById(R.id.text);
+                    tv.setText("Some text");
+                    // Add the modified layout to the row
+                    myRow.addView(rl);
+                }
+
+            }
+            catalogueTable.addView(myRow);
+        }
     }
 }

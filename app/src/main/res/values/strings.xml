@@ -61,5 +61,6 @@
     <string name="title_reset_password">Escribe tu nombre de usuario y te enviaremos tu nueva contraseña</string>
     <string name="welcome">Bienvenid@</string>
     <string name="title_activity_example_map">ExampleMap</string>
+    <string name="title_activity_example_table">ExampleTable</string>
 
 </resources>

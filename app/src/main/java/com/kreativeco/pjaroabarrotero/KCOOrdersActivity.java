@@ -13,9 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kreativeco.pjaroabarrotero.KCODatabase.KCOConnectionDataBase;
@@ -25,7 +25,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.kreativeco.pjaroabarrotero.libraries.KCOASOrdersToCustomer;
+import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
+import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class KCOOrdersActivity extends Activity {
     private ListView leftDrawerList, committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
     TextView totalCost, folio;
     Context thisClass = this;
+    RelativeLayout listViewRL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class KCOOrdersActivity extends Activity {
         yellowBar = (ImageView) findViewById(R.id.yellow_bar2);
         greenBar = (ImageView) findViewById(R.id.green_bar2);
 
+        this.totalCost = (TextView) findViewById(R.id.total_cost);
+        this.folio = (TextView) findViewById(R.id.folio);
+
         leftDrawerOrders = (DrawerLayout) findViewById(R.id.draweLayoutOrders);
 
         this.leftDrawerList = (ListView) findViewById(R.id.left_drawer_orders);
@@ -60,6 +66,8 @@ public class KCOOrdersActivity extends Activity {
 
         this.committedOrderList = (ListView) findViewById(R.id.list_committed_orders);
 
+        listViewRL = (RelativeLayout) findViewById(R.id.list_views_rl);
+
         this.orderDetailsList = (ListView) findViewById(R.id.list_orders_details);
         ArrayList<KCOListItems> listItems = getItems();
         KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(this, listItems);
@@ -68,9 +76,6 @@ public class KCOOrdersActivity extends Activity {
 
         this.registeredOredersList = (ListView) findViewById(R.id.list_registered_orders);
         this.sendOrdersList = (ListView) findViewById(R.id.list_send_orders);
-
-        this.totalCost = (TextView) findViewById(R.id.total_cost);
-        this.folio = (TextView) findViewById(R.id.folio);
 
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(orderDetailsList.getWindowToken(), 0);
@@ -261,8 +266,8 @@ public class KCOOrdersActivity extends Activity {
 
         }while(cursorInfo.moveToNext());
 
-        items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
-
+        //items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
+        totalCost.setText(totalFinal+"");
         return items;
     }
     @Override
@@ -476,6 +481,33 @@ public class KCOOrdersActivity extends Activity {
         }
 
         Log.v("JSON QUERY", finalJSON.toString());
+
+        String opt="5";
+
+        new KCOASWS(new KCOAsyncResponseG() {
+            @Override
+            public void processFinishG(JSONObject json) {
+                if (json!=null && json.length() > 0){
+                    try {
+                        //Obtenemos del JSON los datos y hacemos las respectivas validaciones para avisarle al usuario los resultados del servidor
+                        String message = json.getString("message");
+                        String status = json.getString("status");
+                        //Debug
+                        Log.d("ORDER", "Message : " + message);
+                        Log.d("ORDER", "Status : " + status);
+
+                    }catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.d("ORDER SEND","Orden rechazada");
+                    //METHOD ALERT
+                }
+            }
+        }).execute(opt, "a2a8f1ee9521edcb544ddf0b5c206f295d074bc5:kS5eOi8g", finalJSON.toString());
+
+        listViewRL.removeAllViewsInLayout();
+        connectionDB.deleteInformationrFromBasket(connectionDB);
 
     }
 
