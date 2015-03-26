@@ -247,27 +247,30 @@ public class KCOOrdersActivity extends Activity {
 
         KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
         Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
+
         cursorInfo.moveToFirst();
 
-        do{
 
-            String name = cursorInfo.getString(0);
-            String img = cursorInfo.getString(1);
-            String price = cursorInfo.getString(2);
-            String number = cursorInfo.getString(3);
-            String total = cursorInfo.getString(4);
+            do{
 
-            String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " +total;
-            Log.i("Query ", values);
+                String name = cursorInfo.getString(0);
+                String img = cursorInfo.getString(1);
+                String price = cursorInfo.getString(2);
+                String number = cursorInfo.getString(3);
+                String total = cursorInfo.getString(4);
 
-            items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, "drawable/order01"));
-            i++;
-            totalFinal += Integer.parseInt(total);
+                String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " +total;
+                Log.i("Query ", values);
 
-        }while(cursorInfo.moveToNext());
+                items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, "drawable/order01"));
+                i++;
+                totalFinal += Integer.parseInt(total);
+
+            }while(cursorInfo.moveToNext());
+
+            totalCost.setText(totalFinal+"");
 
         //items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
-        totalCost.setText(totalFinal+"");
         return items;
     }
     @Override

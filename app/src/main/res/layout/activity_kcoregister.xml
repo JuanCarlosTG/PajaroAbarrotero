@@ -56,15 +56,6 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/_03camara"/>
 
-        <ImageView
-            android:id="@+id/imgPreview"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:visibility="invisible"
-            />
-
-
         <EditText
             android:id="@+id/shop_register"
             android:layout_width="500dp"

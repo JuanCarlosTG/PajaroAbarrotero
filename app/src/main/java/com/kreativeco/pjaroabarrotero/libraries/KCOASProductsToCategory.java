@@ -21,6 +21,7 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
     private static final String COD = "cod";
     private static final String NAME = "name";
     private static final String IVA = "iva";
+    private static final String IMAGEURL = "file_image";
 
     @Override
     protected ArrayList<HashMap<String, String>> doInBackground(String...params) {
@@ -40,6 +41,7 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
                 String idProduct = aux.getString(ID);
                 String codProduct = aux.getString(COD);
                 String ivaProduct = aux.getString(IVA);
+                String imageProduct = aux.getString(IMAGEURL);
 
                 HashMap<String, String> map = new HashMap<>();
 
@@ -47,6 +49,7 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
                 map.put(ID, idProduct);
                 map.put(COD, codProduct);
                 map.put(IVA, ivaProduct);
+                map.put(IMAGEURL, imageProduct);
 
                 listProductsToCat.add(map);
             }

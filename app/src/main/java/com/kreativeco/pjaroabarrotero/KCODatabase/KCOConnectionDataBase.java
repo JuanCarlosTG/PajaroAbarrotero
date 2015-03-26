@@ -70,7 +70,7 @@ public class KCOConnectionDataBase extends SQLiteOpenHelper {
 
     public void deleteInformationrFromBasket(KCOConnectionDataBase connectDB){
         SQLiteDatabase SqlDB = connectDB.getWritableDatabase();
-        SqlDB.execSQL("DROP TABLE IF EXISTS '" + BasketDataBase.TABLE_NAME + "'");
+        SqlDB.execSQL("DELETE FROM '" + BasketDataBase.TABLE_NAME + "'");
 
     }
 

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASProductsToCategory;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +76,6 @@ public class KCOMainDrawerActivity extends Activity {
         leftListDrawer.setAdapter(customaAdapter);
 
         leftListDrawer.setOnItemClickListener(new DrawerView());
-
-        deployButtons(14, careTable);
 
         /*final String[] options = getResources().getStringArray(R.array.StringsDrawerList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options);
@@ -176,7 +175,6 @@ public class KCOMainDrawerActivity extends Activity {
         return items;
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -217,27 +215,17 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
-
+        careTable.removeAllViews();
         SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
         new KCOASProductsToCategory(new KCOAsyncResponse() {
             @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
 
-                if(output!=null) {
-                    //ArrayList<KCOListItems> items = new ArrayList<>();
-                    for (Map<String, String> map : output) {
-                        String tagID = map.get("id");
-                        Log.d("Values Received ID", tagID);
-                        String tagCod = map.get("cod");
-                        Log.d("Values Received COD", tagCod);
-                        String tagName = map.get("name");
-                        Log.d("Values Received NAME", tagName);
-                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
-                    }
-                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
-                }else{
-                    Log.d("Products To Category","Status 0");
-                }
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), careTable);
+                setCatalogue(output, careTable);
+
             }
         }).execute(userProfile.getString("Token", ""), Config.CAT_CUIDADO_PERSONAL);
         careScroll.setVisibility(View.VISIBLE);
@@ -247,6 +235,21 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         redBar.setVisibility(View.VISIBLE);
+        careTable.removeAllViews();
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), careTable);
+                setCatalogue(output, careTable);
+
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_CUIDADO_PERSONAL);
         careScroll.setVisibility(View.VISIBLE);
     }
 
@@ -254,32 +257,20 @@ public class KCOMainDrawerActivity extends Activity {
     {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
+        homeTable.removeAllViews();
 
         SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
         new KCOASProductsToCategory(new KCOAsyncResponse() {
             @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-
-                if(output!=null) {
-                    //ArrayList<KCOListItems> items = new ArrayList<>();
-                    for (Map<String, String> map : output) {
-                        String tagID = map.get("id");
-                        Log.d("Values Received ID", tagID);
-                        String tagCod = map.get("cod");
-                        Log.d("Values Received COD", tagCod);
-                        String tagName = map.get("name");
-                        Log.d("Values Received NAME", tagName);
-                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
-                    }
-                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
-                }else{
-                    Log.d("Products To Category","Status 0");
-                }
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), homeTable);
+                setCatalogue(output, homeTable);
             }
         }).execute(userProfile.getString("Token", ""), Config.CAT_HOGAR);
-        homeTable.removeAllViews();
+
         homeScroll.setVisibility(View.VISIBLE);
-        deployButtons(10, homeTable);
     }
 
     public void launchHome()
@@ -287,50 +278,80 @@ public class KCOMainDrawerActivity extends Activity {
         hideButtons();
         blueBar.setVisibility(View.VISIBLE);
         homeTable.removeAllViews();
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), homeTable);
+                setCatalogue(output, homeTable);
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_HOGAR);
+
         homeScroll.setVisibility(View.VISIBLE);
-        deployButtons(10, homeTable);
     }
 
     public void launchFoods(View v)
     {
         hideButtons();
-        foodScroll.setVisibility(View.VISIBLE);
         yellowBar.setVisibility(View.VISIBLE);
+        foodTable.removeAllViews();
 
         SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
         new KCOASProductsToCategory(new KCOAsyncResponse() {
             @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-
-                if(output!=null) {
-                    //ArrayList<KCOListItems> items = new ArrayList<>();
-                    for (Map<String, String> map : output) {
-                        String tagID = map.get("id");
-                        Log.d("Values Received ID", tagID);
-                        String tagCod = map.get("cod");
-                        Log.d("Values Received COD", tagCod);
-                        String tagName = map.get("name");
-                        Log.d("Values Received NAME", tagName);
-                        //items.add(new KCOListItems(Long.parseLong(tagName), tagCod, "drawable/_07icono_canasta"));
-                    }
-                    //KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOMainDrawerActivity.this, items);
-                }else{
-                    Log.d("Products To Category","Status 0");
-                }
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), foodTable);
+                setCatalogue(output, foodTable);
             }
         }).execute(userProfile.getString("Token", ""), Config.CAT_ALIMENTOS);
+
+        foodScroll.setVisibility(View.VISIBLE);
     }
 
     public void launchFoods()
     {
         hideButtons();
-        foodScroll.setVisibility(View.VISIBLE);
         yellowBar.setVisibility(View.VISIBLE);
+        foodTable.removeAllViews();
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), foodTable);
+                setCatalogue(output, foodTable);
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_ALIMENTOS);
+
+        foodScroll.setVisibility(View.VISIBLE);
     }
 
     public void launchOthers(View v)
     {
         hideButtons();
+        greenBar.setVisibility(View.VISIBLE);
+        othersTable.removeAllViews();
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASProductsToCategory(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output)
+            {
+                Log.v("Tamano",output.size()+"");
+                deployButtons(output.size(), othersTable);
+                setCatalogue(output, othersTable);
+            }
+        }).execute(userProfile.getString("Token", ""), Config.CAT_OTROS);
+
+        othersScroll.setVisibility(View.VISIBLE);
+        /*hideButtons();
         othersScroll.setVisibility(View.VISIBLE);
         greenBar.setVisibility(View.VISIBLE);
 
@@ -338,7 +359,7 @@ public class KCOMainDrawerActivity extends Activity {
         new KCOASProductsToCategory(new KCOAsyncResponse() {
             @Override
             public void processFinish(ArrayList<HashMap<String, String>> output) {
-
+                Log.d("Tamaño ooutput", output.size()+"");
                 if(output!=null) {
                     //ArrayList<KCOListItems> items = new ArrayList<>();
                     for (Map<String, String> map : output) {
@@ -355,7 +376,7 @@ public class KCOMainDrawerActivity extends Activity {
                     Log.d("Products To Category","Status 0");
                 }
             }
-        }).execute(userProfile.getString("Token", ""), Config.CAT_OTROS);
+        }).execute(userProfile.getString("Token", ""), Config.CAT_OTROS);*/
     }
 
     public void launchOthers()
@@ -383,6 +404,7 @@ public class KCOMainDrawerActivity extends Activity {
 
     private void deployButtons(int elementos, TableLayout catalogueTable) {
         int NUM_ROW;
+        int indexRows=0;
         if(elementos % 3 == 0){
             NUM_ROW = elementos/3;
         }
@@ -415,19 +437,114 @@ public class KCOMainDrawerActivity extends Activity {
                     img.setBackgroundColor(Color.TRANSPARENT);
                     // Add the modified layout to the row
                     myRow.addView(rl);
-                }
+                 }
 
                 else{
 
                     ImageButton img = (ImageButton) rl.findViewById(R.id.img);
                     TextView tv = (TextView) rl.findViewById(R.id.text);
-                    tv.setText("Some text");
+                    tv.setBackgroundColor(Color.rgb(229, 229, 229));
                     // Add the modified layout to the row
                     myRow.addView(rl);
+                    indexRows = indexRows +1;
                 }
 
             }
             catalogueTable.addView(myRow);
+        }
+    }
+
+    private void setCatalogue(ArrayList<HashMap<String, String>> output, TableLayout currentTable)
+    {
+        if(output!=null) {
+            int elementos, indexCol, indexRow;
+            indexCol = 0;
+            indexRow = 0;
+            elementos = 1;
+            TableRow row;
+            RelativeLayout rl;
+            ImageButton imageButton;
+            TextView textView;
+
+            for(Map<String, String> map : output)
+            {
+                if(elementos % 3 == 1)
+                {
+                    Log.v("entraa if","1");
+                    row = (TableRow) currentTable.getChildAt(indexRow);
+                    Log.v("INDEX COL", indexCol+"");
+                    rl = (RelativeLayout) row.getChildAt(indexCol);
+                    imageButton = (ImageButton) rl.getChildAt(0);
+                    textView = (TextView) rl.getChildAt(1);
+
+                    String tagUrl = map.get("file_image");
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+                    String tagName = map.get("name");
+
+                    textView.setText(tagName);
+
+                    Log.d("URL image", tagUrl+"");
+                    Log.d("Values Received NAME 1", tagName);
+
+                    indexCol = 1;
+                    Log.i("IndexCol",indexCol+"");
+                }
+
+                if(elementos % 3 == 2)
+                {
+                    Log.v("entraa if","2");
+                    row = (TableRow) currentTable.getChildAt(indexRow);
+                    rl = (RelativeLayout) row.getChildAt(indexCol);
+
+                    imageButton = (ImageButton) rl.getChildAt(0);
+                    textView = (TextView) rl.getChildAt(1);
+
+                    imageButton.setBackgroundResource(R.drawable.order01);
+
+                    String tagUrl = map.get("file_image");
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+
+                    String tagName = map.get("name");
+                    textView.setText(tagName);
+
+                    Log.d("URL image", tagUrl+"");
+                    Log.d("Values Received NAME 2", tagName);
+
+                    indexCol = 2;
+                    //Log.i("IndexCol",indexCol+"");
+                }
+
+                if(elementos % 3 == 0)
+                {
+                    Log.v("entraa if","3");
+                    row = (TableRow) currentTable.getChildAt(indexRow);
+                    rl = (RelativeLayout) row.getChildAt(indexCol);
+                    imageButton = (ImageButton) rl.getChildAt(0);
+                    textView = (TextView) rl.getChildAt(1);
+
+                    String tagName = map.get("name");
+                    textView.setText(tagName);
+
+                    String tagUrl = map.get("file_image");
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+
+                    Log.d("URL image", tagUrl+"");
+                    Log.d("Values Received NAME 3", tagName);
+
+
+                    imageButton.setBackgroundResource(R.drawable.order01);
+
+                    indexCol = 0;
+                    indexRow = indexRow + 1;
+                    //Log.i("IndexCol",indexCol+"");
+                    //Log.i("IndexCol",indexRow+"");
+                }
+
+                elementos = elementos +1;
+            }
+
+        }else{
+            Log.d("Products To Category","Status 0");
         }
     }
 }
