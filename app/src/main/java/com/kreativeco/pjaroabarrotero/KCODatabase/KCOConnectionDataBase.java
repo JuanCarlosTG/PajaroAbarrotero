@@ -68,4 +68,10 @@ public class KCOConnectionDataBase extends SQLiteOpenHelper {
         return SqlDB.query(BasketDataBase.TABLE_NAME, columns, null, null, null, null, null);
     }
 
+    public void deleteInformationrFromBasket(KCOConnectionDataBase connectDB){
+        SQLiteDatabase SqlDB = connectDB.getWritableDatabase();
+        SqlDB.execSQL("DROP TABLE IF EXISTS '" + BasketDataBase.TABLE_NAME + "'");
+
+    }
+
 }

@@ -2,20 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kreativeco.pjaroabarrotero" >
 
-    <uses-feature android:name="android.hardware.camera2"/>
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <permission
+        android:name="com.kreativeco.pjaroabarrotero.permission.MAPS_RECEIVER"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.kreativeco.pkaroabarrotero.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDqlhlEdRw4E7Pj4d8e8pfw_k3URCOlttY"/>
+            android:value="AIzaSyDqlhlEdRw4E7Pj4d8e8pfw_k3URCOlttY" />
 
         <activity
             android:name=".KCOSplashActivity"
@@ -29,7 +44,7 @@
         <activity
             android:name=".KCOLoginActivity"
             android:label="@string/title_activity_kcologin"
-            android:windowSoftInputMode="stateVisible">
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <activity
             android:name=".KCORegisterActivity"
@@ -48,21 +63,10 @@
             android:label="@string/title_activity_kcoorders" >
         </activity>
         <activity
-            android:name=".KCOOrderDetailsActivity"
-            android:label="@string/title_activity_kcoorder_details" >
-        </activity>
-        <activity
             android:name=".KCOProductDetailsActivity"
             android:label="@string/title_activity_kcoproduct_details"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

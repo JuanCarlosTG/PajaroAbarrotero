@@ -191,6 +191,86 @@
 
             </HorizontalScrollView>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1.0"
+                android:id="@+id/care_scroll"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#AA261B"
+                android:visibility="visible">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/care_table"
+                    android:stretchColumns="*"
+                    >
+                </TableLayout>
+            </ScrollView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1.0"
+                android:id="@+id/home_scroll"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#70b4e0"
+                android:visibility="invisible">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/home_table"
+                    android:stretchColumns="*"
+                    >
+                </TableLayout>
+            </ScrollView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1.0"
+                android:id="@+id/food_scroll"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#F0CA47"
+                android:visibility="invisible">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/food_table"
+                    android:stretchColumns="*"
+                    >
+                </TableLayout>
+            </ScrollView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1.0"
+                android:id="@+id/others_scroll"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#4F844A"
+                android:visibility="invisible">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/others_table"
+                    android:stretchColumns="*"
+                    >
+                </TableLayout>
+            </ScrollView>
+
         </RelativeLayout>
     </FrameLayout>
 
