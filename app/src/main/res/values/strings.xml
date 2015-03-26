@@ -58,10 +58,12 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
     <string name="message_registerOK">Se ha registrado exitosamente. Debe logearse</string>
+    <string name="message_registerNoOK">Hubo un problema al realizar el registro. Inténtelo de nuevo</string>
     <string name="username_reset">Ingrese su nombre de usuario</string>
     <string name="send">Enviar</string>
     <string name="title_reset_password">Escribe tu nombre de usuario y te enviaremos tu nueva contraseña</string>
     <string name="welcome">Bienvenid@</string>
+    <string name="welcomepa">Pájaro Abarrotero</string>
 
     <string name="message_serviceNoOk">Falla de Conexión a Servidor. Intente de nuevo</string>
     <string name="title_serviceNoOK">Conexión fallida</string>
