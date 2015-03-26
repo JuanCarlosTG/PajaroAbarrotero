@@ -6,9 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,20 +27,13 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
+import com.pkmmte.view.CircularImageView;
 
 
-
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
@@ -50,32 +45,37 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
-import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 
-public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
+public class KCORegisterActivity extends Activity {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
     ImageButton registerBtn;
     EditText shop,name,address;
     LocationManager locationManager = null;
     String latitud,longitud;
+    static InputStream is = null;
+    static JSONObject jObj = null;
+    static String json = "";
 
     private String foto,photo;
     private File file;
     private static String nombreFoto;
     // Activity request codes
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 1;
     public static final int MEDIA_TYPE_IMAGE = 1;
 
     // directory name to store captured images and videos
@@ -83,10 +83,9 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
 
     private Uri fileUri; // file url to store image/video
 
-    private ImageView imgPreview;
+    //private ImageView imgPreview;
+    CircularImageView circularImageView;
     private ImageButton btnCapturePicture;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +95,6 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         shop = (EditText)findViewById(R.id.shop_register);
         name = (EditText)findViewById(R.id.nameS_register);
         address = (EditText)findViewById(R.id.addr_register);
-
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.bird_map);
-        mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
@@ -127,7 +123,8 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
         UpdatePosition();
 
-        imgPreview = (ImageView) findViewById(R.id.imgPreview);
+        //imgPreview = (ImageView) findViewById(R.id.imgPreview);
+        circularImageView = (CircularImageView)findViewById(R.id.imgPreview);
         btnCapturePicture = (ImageButton) findViewById(R.id.camera_button);
 
         btnCapturePicture.setOnClickListener(new View.OnClickListener() {
@@ -224,14 +221,20 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
     //Mostramos la imagen desde el path
     private void previewCapturedImage() {
         try {
-            //Ocultamos el Video Preview
-            //imgPreview.setVisibility(View.VISIBLE);
+
             // bimatp factory
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 8;
             final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),options);
-            imgPreview.setImageBitmap(bitmap);
-            //btnCapturePicture.setImageResource(Integer.parseInt(fileUri.getPath()));
+
+            Matrix mat = new Matrix();
+            mat.postRotate(90);
+            Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
+
+            //circularImageView.setImageBitmap(bMapRotate);
+            circularImageView.setImageBitmap(bMapRotate);
+            btnCapturePicture.setAlpha(0f);
+
             foto = fileUri.getPath();
             file = new File(foto);
         } catch (NullPointerException e) {
@@ -286,9 +289,9 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
         HttpPost httppost = new HttpPost(Config.FILE_UPLOAD_URL);
         MultipartEntity mpEntity = new MultipartEntity();
-        ContentBody foto = new FileBody(file, "image/jpeg");
+        ContentBody fotoUp = new FileBody(file, "image/jpeg");
         try {
-            mpEntity.addPart("task", new StringBody(Config.UPLOAD_IMAGE));
+            mpEntity.addPart("task", new StringBody(Config.ADD_PROFILE));
             mpEntity.addPart("shop", new StringBody(shop.getText().toString()));
             mpEntity.addPart("name", new StringBody(name.getText().toString()));
             mpEntity.addPart("address", new StringBody(address.getText().toString()));
@@ -298,36 +301,93 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        mpEntity.addPart(Config.FILE_IMAGE, foto);
+        mpEntity.addPart(Config.FILE_IMAGE, fotoUp);
 
         httppost.setEntity(mpEntity);
         try {
             HttpResponse response = httpclient.execute(httppost);
-            String st = EntityUtils.toString(response.getEntity());
-            Log.v("Response ImageUpload", st);
+            HttpEntity httpEntity = response.getEntity();
+            is = httpEntity.getContent();
+            status=saveUser(is);
+            //String st = EntityUtils.toString(response.getEntity());
+            //Log.v("Response ImageUpload", st);
             httpclient.getConnectionManager().shutdown();
-            status=true;
-        } catch (IOException e) {
 
+        } catch (UnsupportedEncodingException | ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return status;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        LatLng myShop = new LatLng(loc.getLatitude(), loc.getLongitude());
-        map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(myShop, 18 ));
+    private boolean saveUser(InputStream is){
 
-        map.addMarker(new MarkerOptions()
-                .title("MI Tienda")
-                .snippet("Pajaro abarrotero")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable._04pin))
-                .draggable(true)
-                .position(myShop));
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            json = sb.toString();
+            Log.d("JSON Parse", json);
+        } catch (Exception e) {
+            Log.e("Error en el buffer", "Error al convertir el resultado " + e.toString());
+        }
+
+        // tratamos de parsear el string a un objeto de tipo JSON
+        try {
+            jObj = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.e("Parseo JSON", "Error al parsear los datos " + e.toString());
+        }
+
+        String status = "";
+        try {
+            status = jObj.getString("status");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(status.equals("1")){
+            //Guardamos datos
+            SharedPreferences tokenUser = getSharedPreferences("User", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = tokenUser.edit();
+            //Obtenemos del JSON los datos
+            String message = "";
+            String username = "";
+            String password = "";
+            try {
+                message = jObj.getString("message");
+                JSONObject profile = jObj.getJSONObject("profile");
+                username = profile.getString("username");
+                password = profile.getString("password");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //Almacenamos los datos del JSON en la estructura
+            editor.putString("Message", message);
+            editor.putString("STATUS", status);
+            editor.putString("USERNAME", username);
+            editor.putString("PASSWORD", password);
+            editor.commit();
+            return true;
+        }else{
+            SharedPreferences tokenUser = getSharedPreferences("User", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = tokenUser.edit();
+            editor.putString("Message", "Hubo un problema al realizar el registro");
+            editor.putString("STATUS", status);
+            editor.commit();
+
+            return false;
+        }
+
     }
+
 
 
     class KCOUploadImage extends AsyncTask<String,String,String> {
@@ -337,7 +397,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(KCORegisterActivity.this);
-            pDialog.setMessage("Subiendo imagen, espere..." );
+            pDialog.setMessage("Realizando registro, espere..." );
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.show();
         }
@@ -356,8 +416,10 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
                 Log.d("UpImage","OK");
                 createMessageRegisterOK();
             }
-            else
+            else{
                 Log.d("UpImage","NOT OK");
+                createMessageRegisterNoOK();
+            }
             pDialog.dismiss();
         }
     }
@@ -386,6 +448,40 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                createMessageRegisterNewUser();
+            }
+        });
+
+        AlertDialog dialogResetOk = builder.create();
+        dialogResetOk.show();
+    }
+
+    private void createMessageRegisterNoOK(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(KCORegisterActivity.this);
+        builder.setMessage(R.string.message_registerNoOK).setTitle(R.string.title_register);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialogResetOk = builder.create();
+        dialogResetOk.show();
+    }
+
+    private void createMessageRegisterNewUser(){
+        SharedPreferences newUser = getSharedPreferences("User", Context.MODE_PRIVATE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(KCORegisterActivity.this);
+        builder.setMessage("Tu nombre de usuario es: "+newUser.getString("USERNAME", "")+"" +
+                " y tu contraseña es: "+newUser.getString("PASSWORD", "")+".").setTitle(R.string.welcomepa);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                shop.setText("");
+                name.setText("");
+                address.setText("");
                 Intent launchActivity = new Intent(KCORegisterActivity.this, KCOLoginActivity.class);
                 startActivity(launchActivity);
                 finish();
@@ -394,27 +490,6 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback{
 
         AlertDialog dialogResetOk = builder.create();
         dialogResetOk.show();
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        Log.i("ruta", mCurrentPhotoPath);
-        return image;
-        //ImageButton registerPhotoBtn = (ImageButton)findViewById(R.id.camera_button);
-        //registerPhotoBtn.setImageURI();
-
     }
 
     @Override

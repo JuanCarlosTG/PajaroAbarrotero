@@ -12,11 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
+import com.pkmmte.view.CircularImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,13 +29,20 @@ public class KCOProfileActivity extends Activity {
     EditText shop,contact,address;
     RelativeLayout launchOrders;
     ProgressDialog pDialog;
+    CircularImageView circularImageView;
+    ImageButton btnCapture;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcoprofile);
+        context = this;
         shop = (EditText) findViewById(R.id.shop);
         contact = (EditText) findViewById(R.id.contact);
         address = (EditText) findViewById(R.id.address);
+        circularImageView = (CircularImageView)findViewById(R.id.imgPreviewProfile);
+        btnCapture = (ImageButton)findViewById(R.id.camera_button_profile);
+        btnCapture.setAlpha(0f);
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(shop.getWindowToken(), 0);
         launchOrders = (RelativeLayout) findViewById(R.id.proof);
@@ -42,6 +52,7 @@ public class KCOProfileActivity extends Activity {
         pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         getProfileWS();
+
     }
 
     public void getProfileWS(){
@@ -61,7 +72,12 @@ public class KCOProfileActivity extends Activity {
                         String shopJ = profile.getString("shop");
                         String contactJ = profile.getString("contact");
                         String addressJ = profile.getString("address");
+                        String fileImage = profile.getString("file_image");
 
+                        Glide.with(context)
+                                .load(fileImage)
+                                .into(circularImageView);
+                        circularImageView.setRotation(90f);
                         shop.setText(shopJ);
                         contact.setText(contactJ);
                         address.setText(addressJ);
