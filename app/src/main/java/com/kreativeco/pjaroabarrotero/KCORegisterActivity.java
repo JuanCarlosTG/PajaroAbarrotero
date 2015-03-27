@@ -29,6 +29,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.pkmmte.view.CircularImageView;
 
@@ -60,9 +69,8 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class KCORegisterActivity extends Activity {
+public class KCORegisterActivity extends Activity implements OnMapReadyCallback {
 
-    String mCurrentPhotoPath;
     ImageButton registerBtn;
     EditText shop,name,address;
     LocationManager locationManager = null;
@@ -120,6 +128,9 @@ public class KCORegisterActivity extends Activity {
             }
         };
 
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.bird_map);
+        mapFragment.getMapAsync(this);
+
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
         UpdatePosition();
 
@@ -165,7 +176,6 @@ public class KCORegisterActivity extends Activity {
         foto=photo;
         //file = new File(photo);
     }
-
 
     private boolean isDeviceSupportCamera() {
         // this device has a camera
@@ -242,14 +252,12 @@ public class KCORegisterActivity extends Activity {
         }
     }
 
-
     // ------------ Helper Methods ----------------------
 
     //Crea la uri del archivo a almacenar image
     public Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }
-
 
     //Retornamos image
     private static File getOutputMediaFile(int type) {
@@ -280,8 +288,6 @@ public class KCORegisterActivity extends Activity {
 
         return mediaFile;
     }
-
-
 
     private boolean uploadFoto(String imag){
         boolean status = false;
@@ -388,6 +394,51 @@ public class KCORegisterActivity extends Activity {
 
     }
 
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        //Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LatLng myShop = currentPosition();
+
+        map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(myShop, 18));
+
+        map.addMarker(new MarkerOptions()
+                .title("MI Tienda")
+                .snippet("Pajaro abarrotero")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable._04pin))
+                .draggable(true)
+                .position(myShop));
+        map.setOnMarkerDragListener(new OnMarkerDragListener() {
+
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                // TODO Auto-generated method stub
+                // Here your code
+                Toast.makeText(KCORegisterActivity.this, "Dragging Start",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                // TODO Auto-generated method stub
+                LatLng position = marker.getPosition(); //
+                Toast.makeText(
+                        KCORegisterActivity.this,
+                        "Latitude " + position.latitude + " "
+                                + "Longitud " + position.longitude,
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+                // TODO Auto-generated method stub
+                // Toast.makeText(MainActivity.this, "Dragging",
+                // Toast.LENGTH_SHORT).show();
+                System.out.println("Draagging");
+            }
+        });
+    }
 
 
     class KCOUploadImage extends AsyncTask<String,String,String> {
@@ -439,7 +490,14 @@ public class KCORegisterActivity extends Activity {
         }
     }
 
+    private LatLng currentPosition(){
+        LatLng currentLocation;
+        Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
+        currentLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+        return currentLocation;
+    }
 
     private void createMessageRegisterOK(){
         AlertDialog.Builder builder = new AlertDialog.Builder(KCORegisterActivity.this);

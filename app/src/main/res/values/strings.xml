@@ -70,4 +70,6 @@
     <string name="message_loginNoOk">Nombre de usuario o contraseña no válido</string>
     <string name="title_loginNoOK">Login</string>
 
+    <string name="tab">\u0009</string>
+
 </resources>

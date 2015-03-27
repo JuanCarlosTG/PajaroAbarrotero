@@ -21,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASProductsToCategory;
@@ -477,8 +478,17 @@ public class KCOMainDrawerActivity extends Activity {
                     imageButton = (ImageButton) rl.getChildAt(0);
                     textView = (TextView) rl.getChildAt(1);
 
+                    final String tagCod = map.get("cod");
+                    Log.d("Values Received COD", tagCod);
+
+                    imageButton.setOnClickListener(new View.OnClickListener(){
+                        public void onClick(View view){
+                            catalogueClicked(tagCod);
+                        }
+                    });
+
                     String tagUrl = map.get("file_image");
-                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.ic_launcher).resize(200,200).into(imageButton);
                     String tagName = map.get("name");
 
                     textView.setText(tagName);
@@ -496,13 +506,20 @@ public class KCOMainDrawerActivity extends Activity {
                     row = (TableRow) currentTable.getChildAt(indexRow);
                     rl = (RelativeLayout) row.getChildAt(indexCol);
 
+                    final String tagCod = map.get("cod");
+                    Log.d("Values Received COD", tagCod);
+
                     imageButton = (ImageButton) rl.getChildAt(0);
                     textView = (TextView) rl.getChildAt(1);
 
-                    imageButton.setBackgroundResource(R.drawable.order01);
+                    imageButton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            catalogueClicked(tagCod);
+                        }
+                    });
 
                     String tagUrl = map.get("file_image");
-                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.ic_launcher).resize(200,200).into(imageButton);
 
                     String tagName = map.get("name");
                     textView.setText(tagName);
@@ -522,17 +539,22 @@ public class KCOMainDrawerActivity extends Activity {
                     imageButton = (ImageButton) rl.getChildAt(0);
                     textView = (TextView) rl.getChildAt(1);
 
+                    final String tagCod = map.get("cod");
+                    Log.d("Values Received COD", tagCod);
+
                     String tagName = map.get("name");
                     textView.setText(tagName);
 
                     String tagUrl = map.get("file_image");
-                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.order01).resize(200,200).into(imageButton);
+                    Picasso.with(this).load(tagUrl).placeholder(R.drawable.ic_launcher).resize(200,200).into(imageButton);
 
+                    imageButton.setOnClickListener(new View.OnClickListener(){
+                        public void onClick(View view){
+                            catalogueClicked(tagCod);
+                        }
+                    });
                     Log.d("URL image", tagUrl+"");
                     Log.d("Values Received NAME 3", tagName);
-
-
-                    imageButton.setBackgroundResource(R.drawable.order01);
 
                     indexCol = 0;
                     indexRow = indexRow + 1;
@@ -546,5 +568,12 @@ public class KCOMainDrawerActivity extends Activity {
         }else{
             Log.d("Products To Category","Status 0");
         }
+    }
+
+    private void catalogueClicked(String tagCod){
+        Intent launchActivity = new Intent(KCOMainDrawerActivity.this, KCOProductDetailsActivity.class);
+        launchActivity.putExtra("code", tagCod);
+        startActivity(launchActivity);
+        Toast.makeText(this,"TagCode: " + tagCod , Toast.LENGTH_SHORT).show();
     }
 }

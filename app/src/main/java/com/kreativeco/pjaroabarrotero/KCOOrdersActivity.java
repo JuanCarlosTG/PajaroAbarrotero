@@ -162,7 +162,7 @@ public class KCOOrdersActivity extends Activity {
     private void selectItem(int position){
         switch (position){
             case 0:
-                launchProductDetails();
+                launchMainDrawer();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 1:
@@ -248,28 +248,25 @@ public class KCOOrdersActivity extends Activity {
         KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
         Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
 
-        cursorInfo.moveToFirst();
+        if(cursorInfo.moveToFirst() ) {
+                do {
+                    String name = cursorInfo.getString(0);
+                    String img = cursorInfo.getString(1);
+                    String price = cursorInfo.getString(2);
+                    String number = cursorInfo.getString(3);
+                    String total = cursorInfo.getString(4);
 
+                    String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " + total;
+                    Log.i("Query ", values);
 
-            do{
+                    items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, "drawable/order01"));
+                    i++;
+                    totalFinal += Integer.parseInt(total);
 
-                String name = cursorInfo.getString(0);
-                String img = cursorInfo.getString(1);
-                String price = cursorInfo.getString(2);
-                String number = cursorInfo.getString(3);
-                String total = cursorInfo.getString(4);
+                } while (cursorInfo.moveToNext());
 
-                String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " +total;
-                Log.i("Query ", values);
-
-                items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, "drawable/order01"));
-                i++;
-                totalFinal += Integer.parseInt(total);
-
-            }while(cursorInfo.moveToNext());
-
-            totalCost.setText(totalFinal+"");
-
+                totalCost.setText(totalFinal + "");
+            }
         //items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
         return items;
     }
@@ -531,5 +528,6 @@ public class KCOOrdersActivity extends Activity {
     {
         leftDrawerOrders.openDrawer(leftDrawerList);
     }
+
 
 }
