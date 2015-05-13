@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#D3D3D3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="@style/bt_menu"
+            android:text="@string/txt_personal_care"
+            android:tag="1"
+            android:textColor="#AA261B"
+            android:onClick="clickCategry"/>
+        <Button
+            style="@style/bt_menu"
+            android:text="@string/txt_home"
+            android:tag="2"
+            android:textColor="#70b4e0"
+            android:onClick="clickCategry"/>
+        <Button
+            style="@style/bt_menu"
+            android:text="@string/txt_food"
+            android:tag="3"
+            android:textColor="#F0CA47"
+            android:onClick="clickCategry"/>
+        <Button
+            style="@style/bt_menu"
+            android:text="@string/txt_others"
+            android:tag="4"
+            android:textColor="#4F844A"
+            android:onClick="clickCategry"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="middle"
+        >
+
+        <ImageView
+            style="@style/iv_menu"
+            android:id="@+id/iv_red"
+            android:background="#AA261B"/>
+        <ImageView
+            style="@style/iv_menu"
+            android:id="@+id/iv_blue"
+            android:background="#70b4e0"/>
+        <ImageView
+            style="@style/iv_menu"
+            android:id="@+id/iv_yellow"
+            android:background="#F0CA47"/>
+        <ImageView
+            style="@style/iv_menu"
+            android:id="@+id/iv_green"
+            android:background="#4F844A"/>
+
+    </LinearLayout>
+
+</LinearLayout>

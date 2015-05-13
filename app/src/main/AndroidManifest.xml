@@ -25,38 +25,51 @@
 
         <activity
             android:name=".KCOSplashActivity"
-            android:label="@string/title_activity_kcosplash" >
+            android:label="@string/title_activity_kcosplash"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".KCOLoginActivity"
             android:label="@string/title_activity_kcologin"
-            android:windowSoftInputMode="stateVisible" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".KCORegisterActivity"
-            android:label="@string/title_activity_kcoregister" >
+            android:label="@string/title_activity_kcoregister"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".KCOMainDrawerActivity"
-            android:label="@string/title_activity_kcomain_drawer" >
+            android:label="@string/title_activity_kcomain_drawer"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".KCOProfileActivity"
-            android:label="@string/title_activity_kcoprofile" >
+            android:label="@string/title_activity_kcoprofile"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".KCOOrdersActivity"
-            android:label="@string/title_activity_kcoorders" >
+            android:label="@string/title_activity_kcoorders"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".KCOProductDetailsActivity"
             android:label="@string/title_activity_kcoproduct_details"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

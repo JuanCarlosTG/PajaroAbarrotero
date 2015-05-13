@@ -50,7 +50,7 @@ public class KCOConnectionDataBase extends SQLiteOpenHelper {
         contentValues.put(BasketDataBase.COLUMN_NAME_TOTAL, total);
 
         SqlDB.insert(BasketDataBase.TABLE_NAME, null, contentValues);
-        Log.d("Database insertInformation", "Product inserted in Data Base");
+        //Log.d("Database insertInformation", "Product inserted in Data Base");
 
     }
 
@@ -61,6 +61,7 @@ public class KCOConnectionDataBase extends SQLiteOpenHelper {
                 {
                         BasketDataBase.COLUMN_NAME_PRODUCT_NAME,
                         BasketDataBase.COLUMN_NAME_PRODUCT_IMAGE,
+                        BasketDataBase.COLUMN_NAME_PRODUCT_CODE,
                         BasketDataBase.COLUMN_NAME_PRODUCT_PRICE,
                         BasketDataBase.COLUMN_NAME_NUMBER_PRODUCTS,
                         BasketDataBase.COLUMN_NAME_TOTAL,

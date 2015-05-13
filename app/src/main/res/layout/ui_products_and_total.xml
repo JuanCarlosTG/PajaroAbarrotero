@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        style="@style/tv_products_and_cost"
+        android:id="@+id/tv_number"
+        android:paddingLeft="5dp"
+        android:layout_weight="6"
+        android:text="100"/>
+
+    <TextView
+        style="@style/tv_products_and_cost"
+        android:layout_weight="4"
+        android:text="Productos en el carrito"/>
+
+    <TextView
+        style="@style/tv_products_and_cost"
+        android:layout_weight="6"
+        android:text="Total $ "/>
+
+    <TextView
+        style="@style/tv_products_and_cost"
+        android:id="@+id/tv_total"
+        android:layout_weight="6"
+        android:text="cuatro"/>
+</LinearLayout>

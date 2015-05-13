@@ -8,15 +8,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kreativeco.pjaroabarrotero.KCODatabase.KCOConnectionDataBase;
 
@@ -24,37 +28,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.kreativeco.pjaroabarrotero.libraries.KCOASOrdersToCustomer;
+import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
-import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class KCOOrdersActivity extends Activity {
 
     public DrawerLayout leftDrawerOrders;
-    ImageView redBar, blueBar, yellowBar, greenBar;
-    private ListView leftDrawerList, committedOrderList, orderDetailsList, registeredOredersList, sendOrdersList;
-    TextView totalCost, folio;
+    private ListView leftDrawerList;
+    TextView totalCost;
     Context thisClass = this;
-    RelativeLayout listViewRL;
+    public String codeCustomer;
+    LinearLayout llProductsIntoCar;
+    LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcoorders);
 
-        redBar = (ImageView) findViewById(R.id.red_bar2);
-        blueBar = (ImageView) findViewById(R.id.blue_bar2);
-        yellowBar = (ImageView) findViewById(R.id.yellow_bar2);
-        greenBar = (ImageView) findViewById(R.id.green_bar2);
-
-        this.totalCost = (TextView) findViewById(R.id.total_cost);
-        this.folio = (TextView) findViewById(R.id.folio);
+        //this.totalCost = (TextView) findViewById(R.id.total_cost);
 
         leftDrawerOrders = (DrawerLayout) findViewById(R.id.draweLayoutOrders);
 
@@ -64,29 +60,15 @@ public class KCOOrdersActivity extends Activity {
         leftDrawerList.setAdapter(customAdapterDrawer);
         leftDrawerList.setOnItemClickListener(new LeftDrawerView());
 
-        this.committedOrderList = (ListView) findViewById(R.id.list_committed_orders);
-
-        listViewRL = (RelativeLayout) findViewById(R.id.list_views_rl);
-
-        this.orderDetailsList = (ListView) findViewById(R.id.list_orders_details);
-        ArrayList<KCOListItems> listItems = getItems();
-        KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(this, listItems);
-        orderDetailsList.setAdapter(customAdapter);
-        orderDetailsList.setOnItemClickListener(new DrawerView());
-
-        this.registeredOredersList = (ListView) findViewById(R.id.list_registered_orders);
-        this.sendOrdersList = (ListView) findViewById(R.id.list_send_orders);
 
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(orderDetailsList.getWindowToken(), 0);
+
+        llProductsIntoCar = (LinearLayout) findViewById(R.id.ll_products_into_car);
+        inflater = getLayoutInflater();
+
+        showShoppingCar();
     }
 
-    private class DrawerView implements ListView.OnItemClickListener{
-        @Override
-        public void  onItemClick(AdapterView<?> parent, View view, int position, long id){
-            selectItem(position);
-        }
-    }
 
     private class LeftDrawerView implements  ListView.OnItemClickListener{
         @Override
@@ -133,25 +115,21 @@ public class KCOOrdersActivity extends Activity {
                 leftDrawerOrders.closeDrawers();
                 break;
             case 8:
-                launchOutStanding();
                 leftDrawerOrders.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
-            case 9:
-                launchRegistered();
+            /*case 9:
                 leftDrawerOrders.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 10:
-                launchSend();
                 leftDrawerOrders.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
                 break;
             case 11:
-                launchDelivered();
                 leftDrawerOrders.closeDrawers();
                 Log.i("posicion sleccionada", String.valueOf(position));
-                break;
+                break;*/
 
             default:
                 break;
@@ -163,54 +141,10 @@ public class KCOOrdersActivity extends Activity {
         switch (position){
             case 0:
                 launchMainDrawer();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 1:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 2:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 3:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 4:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 5:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 6:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 7:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 8:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 9:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 10:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 11:
-                launchProductDetails();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-
+                finish();
             default:
+                launchMainDrawer();
+                finish();
                 break;
 
         }
@@ -228,21 +162,78 @@ public class KCOOrdersActivity extends Activity {
         items.add(new KCOListItems(6, "drawable/_05_3alimentos"));
         items.add(new KCOListItems(7, "drawable/_05_4otros"));
         items.add(new KCOListItems(8, "Pedidos", "drawable/_05backtitle"));
-        items.add(new KCOListItems(9, "drawable/_05_5pendientes"));
-        items.add(new KCOListItems(10, "drawable/_05_6registrados"));
-        items.add(new KCOListItems(11, "drawable/_05_7enviados"));
-        items.add(new KCOListItems(12, "drawable/_05_8entregados"));
+        //items.add(new KCOListItems(9, "drawable/_05_5pendientes"));
+        //items.add(new KCOListItems(10, "drawable/_05_6registrados"));
+        //items.add(new KCOListItems(11, "drawable/_05_7enviados"));
+        //items.add(new KCOListItems(12, "drawable/_05_8entregados"));
 
         return items;
     }
 
-    private ArrayList<KCOListItems>getItems(){
+    private void showShoppingCar(){
+        KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
+        Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
+
+        if(cursorInfo.moveToFirst() ) {
+
+            LayoutInflater inflater = LayoutInflater.from(this);
+
+            do {
+
+                RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.ui_product_into_car, null);
+
+                ImageView ivProduct         = (ImageView) rl.findViewById(R.id.iv_product);
+                TextView tvProductName      = (TextView) rl.findViewById(R.id.tv_product_name);
+                final TextView tvCantity    = (TextView) rl.findViewById(R.id.tv_cantity);
+                Button btPlus               = (Button) rl.findViewById(R.id.bt_plus);
+                Button btMinus              = (Button) rl.findViewById(R.id.bt_minus);
+                TextView tvPrice            = (TextView) rl.findViewById(R.id.tv_price);
+
+                String name = cursorInfo.getString(0);
+                tvProductName.setText(name);
+
+                String img = cursorInfo.getString(1);
+                Picasso.with(this).load(img).placeholder(R.drawable.ic_launcher).resize(100,100).into(ivProduct);
+
+                String number = cursorInfo.getString(4);
+                tvCantity.setText(number);
+
+                String price = cursorInfo.getString(5);
+                tvPrice.setText(price);
+
+                btPlus.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+                        plusClicked(tvCantity);
+                    }
+                });
+
+                btMinus.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+                        minusClicked(tvCantity);
+                    }
+                });
+
+                llProductsIntoCar.addView(rl);
+                
+                String total = cursorInfo.getString(4);
+
+                String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " + total;
+                Log.i("Query ", values);
+
+            } while (cursorInfo.moveToNext());
+
+//            totalCost.setText(totalFinal + "");
+        }
+
+    }
+
+    /*private ArrayList<KCOListItems>getItems(){
 
         ArrayList<KCOListItems> items = new ArrayList<>();
         int i = 1;
-        int totalFinal = 0;
+        double totalFinal = 0.0;
 
-        items.add(new KCOListItems(i, "Pedido Pendiente", "drawable/order02"));
+        items.add(new KCOListItems(i, "Pedido Pendiente", "drawable/_07icono_canasta"));
         i++;
 
         KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
@@ -259,17 +250,18 @@ public class KCOOrdersActivity extends Activity {
                     String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " + total;
                     Log.i("Query ", values);
 
-                    items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, "drawable/order01"));
+                    items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, img));
                     i++;
-                    totalFinal += Integer.parseInt(total);
+                    totalFinal += Double.parseDouble(total);
 
                 } while (cursorInfo.moveToNext());
 
                 totalCost.setText(totalFinal + "");
-            }
+        }
         //items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
         return items;
-    }
+    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -292,231 +284,105 @@ public class KCOOrdersActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void hideButtons()
-    {
 
-        redBar.setVisibility(View.INVISIBLE);
-        blueBar.setVisibility(View.INVISIBLE);
-        yellowBar.setVisibility(View.INVISIBLE);
-        greenBar.setVisibility(View.INVISIBLE);
-        committedOrderList.setVisibility(View.INVISIBLE);
-        orderDetailsList.setVisibility(View.INVISIBLE);
-        registeredOredersList.setVisibility(View.INVISIBLE);
-        sendOrdersList.setVisibility(View.INVISIBLE);
-        totalCost.setVisibility(View.INVISIBLE);
-        folio.setVisibility(View.INVISIBLE);
-        //sendOrderBtn.setVisibility(View.INVISIBLE);
-
-    }
-
-    public void launchOutStanding(View v)
-    {
-
-        hideButtons();
-        redBar.setVisibility(View.VISIBLE);
-        orderDetailsList.setVisibility(View.VISIBLE);
-        totalCost.setVisibility(View.VISIBLE);
-        folio.setVisibility(View.VISIBLE);
-        //sendOrderBtn.setVisibility(View.VISIBLE);
-
-    }
-
-    public void launchOutStanding()
-    {
-
-        hideButtons();
-        redBar.setVisibility(View.VISIBLE);
-        orderDetailsList.setVisibility(View.VISIBLE);
-        totalCost.setVisibility(View.VISIBLE);
-        folio.setVisibility(View.VISIBLE);
-        //sendOrderBtn.setVisibility(View.VISIBLE);
-
-    }
-
-    public void launchRegistered(View v)
-    {
-        hideButtons();
-        blueBar.setVisibility(View.VISIBLE);
-        registeredOredersList.setVisibility(View.VISIBLE);
-
-        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
-        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
-            @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-                ArrayList<KCOListItems> items = new ArrayList<>();
-                for(Map<String, String> map : output){
-                    String tagID = map.get("id");
-                    Log.d("Values Received ID",tagID);
-                    String tagCode = map.get("code_customer");
-                    Log.d("Values Received FOLIO",tagCode);
-                    items.add(new KCOListItems(Long.parseLong(tagID),tagCode,"drawable/_07icono_canasta"));
-                }
-
-                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
-                registeredOredersList.setAdapter(customAdapter);
-                registeredOredersList.setOnItemClickListener(new DrawerView());
-
-            }
-        }).execute(userProfile.getString("Token", ""),"registered");
-
-    }
-
-    public void launchRegistered()
-    {
-        hideButtons();
-        blueBar.setVisibility(View.VISIBLE);
-        registeredOredersList.setVisibility(View.VISIBLE);
-    }
-
-    public void launchSend(View v)
-    {
-        hideButtons();
-        yellowBar.setVisibility(View.VISIBLE);
-        sendOrdersList.setVisibility(View.VISIBLE);
-
-        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
-        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
-            @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-                ArrayList<KCOListItems> items = new ArrayList<>();
-                for(Map<String, String> map : output){
-                    String tagID = map.get("id");
-                    Log.d("Values Received ID",tagID);
-                    String tagCode = map.get("code_customer");
-                    Log.d("Values Received FOLIO",tagCode);
-                    items.add(new KCOListItems(Long.parseLong(tagID),tagCode,"drawable/_07icono_canasta"));
-                }
-
-                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
-                sendOrdersList.setAdapter(customAdapter);
-                sendOrdersList.setOnItemClickListener(new DrawerView());
-
-            }
-        }).execute(userProfile.getString("Token", ""),"sended");
-    }
-
-    public void launchSend()
-    {
-        hideButtons();
-        yellowBar.setVisibility(View.VISIBLE);
-        sendOrdersList.setVisibility(View.VISIBLE);
-    }
-
-    public void launchDelivered(View v)
-    {
-        hideButtons();
-        greenBar.setVisibility(View.VISIBLE);
-        committedOrderList.setVisibility(View.VISIBLE);
-
-        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
-        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
-            @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-                ArrayList<KCOListItems> items = new ArrayList<>();
-
-                for(Map<String, String> map : output){
-                    String tagName = map.get("id");
-                    Log.d("Values Received ID",tagName);
-                    String tagFolio = map.get("folio_number");
-                    Log.d("Values Received FOLIO",tagFolio);
-                    items.add(new KCOListItems(Long.parseLong(tagName),tagFolio,"drawable/_07icono_canasta"));
-                }
-
-                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
-                committedOrderList.setAdapter(customAdapter);
-                committedOrderList.setOnItemClickListener(new DrawerView());
-
-            }
-        }).execute(userProfile.getString("Token", ""),"received");
-
-
-    }
-
-    public void launchDelivered()
-    {
-        hideButtons();
-        greenBar.setVisibility(View.VISIBLE);
-        committedOrderList.setVisibility(View.VISIBLE);
-    }
 
     public void getInfoFromDataBase(View v){
+
         KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
         Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
-        cursorInfo.moveToFirst();
+        //cursorInfo.moveToFirst();
 
         JSONObject finalJSON = new JSONObject();
         JSONArray jsonArrayQueries = new JSONArray();
 
-        do{
-            String name = cursorInfo.getString(0);
-            String img = cursorInfo.getString(1);
-            String price = cursorInfo.getString(2);
-            String number = cursorInfo.getString(3);
-            String total = cursorInfo.getString(4);
+        getCodeCustomer();
+        SharedPreferences customer = getSharedPreferences("codeClie", Context.MODE_PRIVATE );
+        codeCustomer = customer.getString("Code", "");
+        Log.v("CODE-CLIE", codeCustomer);
 
-            String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " +total;
-            Log.i("Query ", values);
+        double totalFinal = 0.0;
+        String auxtotal;
+        if(cursorInfo.moveToFirst()){
+            do{
 
-            JSONObject jsonQuery = new JSONObject();
+                String name = cursorInfo.getString(0);
+                String img = cursorInfo.getString(1);
+                String codeProduct = cursorInfo.getString(2);
+                String price = cursorInfo.getString(3);
+                String number = cursorInfo.getString(4);
+                String total = cursorInfo.getString(5);
+
+                String values = "name: " + name + " img: " + img + "code" +codeProduct + " price: " + price + " number: " + number + " total: " +total;
+                Log.v("Query ", values);
+
+                totalFinal += Double.parseDouble(total);
+
+                JSONObject jsonQuery = new JSONObject();
+                try {
+                    jsonQuery.put("code", codeProduct);
+                    jsonQuery.put("count", number);
+                    jsonQuery.put("price", price);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                jsonArrayQueries.put(jsonQuery);
+
+            }while(cursorInfo.moveToNext());
+
             try {
-                jsonQuery.put("code", name);
-                jsonQuery.put("count", number);
-                jsonQuery.put("price", price);
+                auxtotal = Double.toString(totalFinal);
+                Log.v("VALOOOOOOOOOOR", auxtotal);
+                finalJSON.put("code_customer", codeCustomer);
+                finalJSON.put("order", jsonArrayQueries);
+                finalJSON.put("total", auxtotal );
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            jsonArrayQueries.put(jsonQuery);
+            Log.v("JSON QUERYyyyyy", finalJSON.toString());
 
-        }while(cursorInfo.moveToNext());
+            String opt="5";
 
-        try {
-            finalJSON.put("code_customer", "CLI_0000");
-            finalJSON.put("order", jsonArrayQueries);
-            finalJSON.put("total", "20.20" );
+            SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+            new KCOASWS(new KCOAsyncResponseG() {
+                @Override
+                public void processFinishG(JSONObject json) {
+                    if (json!=null && json.length() > 0){
+                        try {
+                            //Obtenemos del JSON los datos y hacemos las respectivas validaciones para avisarle al usuario los resultados del servidor
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                            String message = json.getString("message");
+                            String status = json.getString("status");
+                            //Debug
+                            Log.d("ORDER", "Message : " + message);
+                            Log.d("ORDER", "Status : " + status);
 
-        Log.v("JSON QUERY", finalJSON.toString());
-
-        String opt="5";
-
-        new KCOASWS(new KCOAsyncResponseG() {
-            @Override
-            public void processFinishG(JSONObject json) {
-                if (json!=null && json.length() > 0){
-                    try {
-                        //Obtenemos del JSON los datos y hacemos las respectivas validaciones para avisarle al usuario los resultados del servidor
-                        String message = json.getString("message");
-                        String status = json.getString("status");
-                        //Debug
-                        Log.d("ORDER", "Message : " + message);
-                        Log.d("ORDER", "Status : " + status);
-
-                    }catch (JSONException e) {
-                        e.printStackTrace();
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Log.d("ORDER SEND","Orden rechazada");
+                        //METHOD ALERT
                     }
-                }else{
-                    Log.d("ORDER SEND","Orden rechazada");
-                    //METHOD ALERT
                 }
-            }
-        }).execute(opt, "a2a8f1ee9521edcb544ddf0b5c206f295d074bc5:kS5eOi8g", finalJSON.toString());
+            }).execute(opt, userProfile.getString("Token",""), finalJSON.toString());
 
-        listViewRL.removeAllViewsInLayout();
-        connectionDB.deleteInformationrFromBasket(connectionDB);
+            connectionDB.deleteInformationrFromBasket(connectionDB);
+        }else{
+            Toast.makeText(getBaseContext(), "No hay pedidos que enviar", Toast.LENGTH_LONG).show();
+        }
 
     }
 
-    public void launchProductDetails()
+    /*public void launchProductDetails()
     {
         Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOProductDetailsActivity.class);
         startActivity(launchActivity);
         finish();
-    }
+    }*/
 
     public void launchMainDrawer()
     {
@@ -529,5 +395,73 @@ public class KCOOrdersActivity extends Activity {
         leftDrawerOrders.openDrawer(leftDrawerList);
     }
 
+    public void getCodeCustomer(){
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASWS(new KCOAsyncResponseG() {
+            @Override
+            public void processFinishG(JSONObject json) {
+                if (json!=null && json.length() > 0){
+                    try {
 
+                        JSONObject profile = json.getJSONObject("profile");
+
+                        SharedPreferences codeClie = getSharedPreferences("codeClie", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = codeClie.edit();
+
+                        //Obtenemos del JSON los datos
+                        codeCustomer = profile.getString("code_customer");
+
+                        //Almacenamos los datos del JSON en la estructura
+                        editor.putString("Code", codeCustomer);
+                        editor.commit();
+
+                        Log.v("Cliente", codeCustomer);
+                    }catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.d("GETPROFILE","Estatus 0 Token No Valido");
+                }
+            }
+        }).execute(Config.WS_GET_PROFILE, userProfile.getString("Token", ""));
+    }
+
+    /*public void setListOrders(final ListView list, String orderStatus){
+
+        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
+        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
+            @Override
+            public void processFinish(ArrayList<HashMap<String, String>> output) {
+                ArrayList<KCOListItems> items = new ArrayList<>();
+                for(Map<String, String> map : output){
+                    String tagID = map.get("id");
+                    Log.d("Values Received ID",tagID);
+                    String tagCode = map.get("code_customer");
+                    Log.d("Values Received FOLIO",tagCode);
+                    String tagFolio = map.get("folio_number");
+                    String tagDate = map.get("date");
+                    items.add(new KCOListItems(1,"FOLIO:\t" + tagFolio + "\t\t FECHA:\t" + tagDate, "drawable/_07icono_canasta"));
+                }
+                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
+                list.setAdapter(customAdapter);
+                //list.setOnItemClickListener(new DrawerView());
+
+            }
+        }).execute(userProfile.getString("Token", ""), orderStatus);
+    }*/
+
+    private void plusClicked(TextView textView){
+        int products = Integer.parseInt(textView.getText().toString());
+        products++;
+        textView.setText(Integer.toString(products));
+        Toast.makeText(this,"TagCode: " + products+"" , Toast.LENGTH_LONG).show();
+    }
+
+    private void minusClicked(TextView textView){
+        int products = Integer.parseInt(textView.getText().toString());
+        if(products<= 0) return;
+        products--;
+        textView.setText(Integer.toString(products));
+        Toast.makeText(this,"TagCode: " + products+"" , Toast.LENGTH_LONG).show();
+    }
 }

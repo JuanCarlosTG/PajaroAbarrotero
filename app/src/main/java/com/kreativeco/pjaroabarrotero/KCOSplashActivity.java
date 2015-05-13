@@ -1,7 +1,9 @@
 package com.kreativeco.pjaroabarrotero;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +11,9 @@ import android.view.MenuItem;
 
 
 public class KCOSplashActivity extends Activity {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +24,19 @@ public class KCOSplashActivity extends Activity {
             public void run() {
 
                 try {
-                    // Thread will sleep for 5 seconds
                     sleep(3*1000);
 
-                    // After 5 seconds redirect to another intent
-                    Intent i=new Intent(getBaseContext(), KCOLoginActivity.class);
-                    startActivity(i);
+                    SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
 
-                    //Remove activity
-                    finish();
+                    if(userProfile.contains("Token")){
+                        Intent intent = new Intent(getBaseContext(), KCOMainDrawerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent i=new Intent(getBaseContext(), KCOLoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
 
                 } catch (Exception e) {
                     Log.e("EXception thread", e.toString());
@@ -38,6 +47,8 @@ public class KCOSplashActivity extends Activity {
     }
 
 
+
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -170,6 +170,12 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
     }
 
 
+
+
+
+
+
+
     private void beginFile(){
         fileUri = Uri.parse("android.resource://com.kreativeco.pjaroabarrotero/"+R.drawable._02logo);
         photo = fileUri.getPath();
@@ -289,12 +295,14 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
         return mediaFile;
     }
 
+
     private boolean uploadFoto(String imag){
         boolean status = false;
         HttpClient httpclient = new DefaultHttpClient();
         httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
         HttpPost httppost = new HttpPost(Config.FILE_UPLOAD_URL);
         MultipartEntity mpEntity = new MultipartEntity();
+
         ContentBody fotoUp = new FileBody(file, "image/jpeg");
         try {
             mpEntity.addPart("task", new StringBody(Config.ADD_PROFILE));
@@ -307,6 +315,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
         mpEntity.addPart(Config.FILE_IMAGE, fotoUp);
 
         httppost.setEntity(mpEntity);
@@ -393,6 +402,14 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
         }
 
     }
+
+
+
+
+
+
+
+
 
     @Override
     public void onMapReady(final GoogleMap map) {
@@ -490,6 +507,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
         }
     }
 
+
     private LatLng currentPosition(){
         LatLng currentLocation;
         Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -509,6 +527,7 @@ public class KCORegisterActivity extends Activity implements OnMapReadyCallback 
                 createMessageRegisterNewUser();
             }
         });
+        /*NUEVATIENDITA00079 MhUVnthR*/
 
         AlertDialog dialogResetOk = builder.create();
         dialogResetOk.show();

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:gravity="center"
+    android:layout_gravity="right"
+    android:layout_marginRight="15dp"
+    android:orientation="vertical"
+    android:layout_height="200dp"
+    android:background="@drawable/globo">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="@string/txt_call_us"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="@string/txt_call_us_number"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:text="@string/txt_send_us"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="@string/txt_send_us_number"/>
+
+</LinearLayout>

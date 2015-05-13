@@ -9,6 +9,7 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -16,212 +17,52 @@
             android:background="@drawable/_fondo"
             android:id="@id/mainMenuLayout">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/barra_titulos"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_includes"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:id="@+id/menu_button_catalogue"
-                    android:background="@drawable/catalogo"
-                    android:onClick="openDrawer"/>
-                    <!--android:onClick="openMenu"-->/>
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/header"/>
 
-                <TextView
-                    style="@style/CodeFont"
-                    android:gravity="center"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="12dp"
-                    android:textSize="25dp"
-                    android:text="@string/title_catalogue"
-                    />
+                <include
+                    android:id="@+id/ll_menu"
+                    layout="@layout/ui_menu_buttons"/>
 
-                <TextView
-                    style="@style/CodeFont"
-                    android:gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="70dp"
-                    android:textSize="25dp"
-                    android:text="@string/title_menu"
-                    />
-            </RelativeLayout>
+                <include
+                    android:id="@+id/ll_header"
+                    layout="@layout/ui_products_and_total"/>
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="60dp"
-                android:scrollbars="none"
-                android:background="@drawable/_02campo">
+            </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp">
-
-                    <RelativeLayout
-                        android:layout_width="149dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                        <ImageButton
-                            android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:onClick="launchPersonalCare"
-                            android:background="@drawable/_06_1cuidado_titulo"/>
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="2dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/_05_linea_horizontal"/>
-
-                    <RelativeLayout
-                        android:layout_width="149dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                        <ImageButton
-                            android:layout_width="65dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:onClick="launchHome"
-                            android:background="@drawable/_06_2hogar_titulo"/>
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="2dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/_05_linea_horizontal"/>
-
-                    <RelativeLayout
-                        android:layout_width="149dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                        <ImageButton
-                            android:layout_width="95dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:onClick="launchFoods"
-                            android:background="@drawable/_06_3alimentos_titulo"/>
-
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="2dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/_05_linea_horizontal"/>
-
-                    <RelativeLayout
-                        android:layout_width="149dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                        <ImageButton
-                            android:layout_width="65dp"
-                            android:layout_height="22dp"
-                            android:layout_gravity="center"
-                            android:onClick="launchOthers"
-                            android:background="@drawable/_06_4otros_titulo"/>
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
-
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="8dp"
-                android:layout_marginTop="100dp"
-                android:scrollbars="none"
-                android:background="@drawable/_02campo">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent">
-
-                    <ImageView
-                        android:layout_width="149dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/red_bar"
-                        android:background="@drawable/_06_1cuidado_barra"
-                        android:visibility="invisible"
-                        android:onClick="launchPersonalCare"/>
-
-                    <ImageView
-                        android:layout_width="149dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/blue_bar"
-                        android:background="@drawable/_06_2hogar_barra"
-                        android:layout_marginLeft="3dp"
-                        android:visibility="invisible"
-                        android:onClick="launchHome"/>
-
-                    <ImageView
-                        android:layout_width="149dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/yellow_bar"
-                        android:background="@drawable/_06_3alimentos_barra"
-                        android:layout_marginLeft="2dp"
-                        android:visibility="invisible"
-                        android:onClick="launchFoods"/>
-
-                    <ImageView
-                        android:layout_width="149dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/green_bar"
-                        android:background="@drawable/_06_4otros_barra"
-                        android:layout_marginLeft="1dp"
-                        android:visibility="invisible"
-                        android:onClick="launchOthers"/>
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1.0"
+                style="@style/sv_table"
+                android:layout_below="@id/ll_includes"
                 android:id="@+id/care_scroll"
-                android:layout_marginTop="120dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:background="#AA261B"
                 android:visibility="visible">
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/care_table"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:stretchColumns="*"
                     >
                 </TableLayout>
+
             </ScrollView>
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1.0"
+                style="@style/sv_table"
                 android:id="@+id/home_scroll"
-                android:layout_marginTop="120dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:background="#70b4e0"
                 android:visibility="invisible">
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -232,14 +73,8 @@
             </ScrollView>
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1.0"
+                style="@style/sv_table"
                 android:id="@+id/food_scroll"
-                android:layout_marginTop="120dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:background="#F0CA47"
                 android:visibility="invisible">
                 <TableLayout
@@ -252,14 +87,8 @@
             </ScrollView>
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1.0"
+                style="@style/sv_table"
                 android:id="@+id/others_scroll"
-                android:layout_marginTop="120dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:background="#4F844A"
                 android:visibility="invisible">
                 <TableLayout

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/rl_header">
+
+    <ImageButton
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:id="@+id/menu_button_catalogue"
+        android:background="@drawable/catalogo"
+        android:onClick="openDrawer"/>
+
+    <Button
+        android:id="@+id/bt_car"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:onClick="launchShoppingCar"
+        android:background="@drawable/_0005_carrito_blanco"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:id="@+id/bt_info"
+        android:layout_width="25dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:onClick="showInfo"
+        android:background="@drawable/_0003_amarillo"
+        android:layout_toLeftOf="@+id/bt_car"/>
+
+    <TextView
+        style="@style/CodeFont"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="70dp"
+        android:textSize="25dp"
+        android:text="@string/title_menu"/>
+</RelativeLayout>

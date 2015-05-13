@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="186dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
     android:padding="5dp">
 
-    <ImageButton android:layout_width="182dp"
-        android:layout_height="200dp"
-        android:id="@+id/img"/>
+    <LinearLayout
+        style="@style/ll_row"
+        android:id="@+id/ll_car">
+
+        <Button
+            style="@style/bt_details_and_car"
+            android:layout_width="120dp"
+            android:text="Ver Detalles"
+            android:background="@android:color/white"/>
+
+        <Button
+            style="@style/bt_details_and_car"
+            android:layout_width="50dp"
+            android:id="@+id/bt_car"
+            android:background="@drawable/_0001_carrito_rojo"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="186dp"
+        android:layout_height="182dp"
+        android:id="@+id/bt_product"
+        android:layout_below="@+id/ll_car"
+        android:background="@android:color/white"/>
 
     <TextView
-        android:layout_width="182dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/img"
-        android:id="@+id/text"
-        android:padding="5dp"/>
+        style="@style/tv_product_name"
+        android:layout_below="@+id/bt_product"
+        android:id="@+id/tv_product_name"/>
+
+    <LinearLayout
+        style="@style/ll_row"
+        android:id="@+id/ll_cantity"
+        android:layout_below="@id/tv_product_name">
+
+        <TextView
+            style="@style/tv_txt_cantity"
+            android:id="@+id/tv_cantity_txt"
+            android:text="Cant."/>
+
+        <Button
+            android:id="@+id/bt_plus"
+            style="@style/bt_row_plus_and_minus"
+            android:background="@drawable/mas"/>
+
+        <TextView
+            style="@style/tv_cantity"
+            android:id="@+id/tv_cantity"
+            android:text="000"/>
+
+        <Button
+            android:id="@+id/bt_minus"
+            style="@style/bt_row_plus_and_minus"
+            android:background="@drawable/menos"/>
+
+        <TextView
+            style="@style/tv_price"
+            android:id="@+id/tv_price"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

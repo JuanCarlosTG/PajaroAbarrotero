@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="#ffffff">
-
     <ImageView
         android:id="@+id/imagenOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"/>
 
@@ -15,10 +14,13 @@
         android:id="@+id/nombreOrder"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_toRightOf="@id/imagenOrder"
+        android:paddingLeft="5dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Large Text"
+        android:text="large"
+        android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView

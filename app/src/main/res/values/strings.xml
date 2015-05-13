@@ -72,4 +72,14 @@
 
     <string name="tab">\u0009</string>
 
+    <string name="txt_home">Hogar</string>
+    <string name="txt_personal_care">Cuidado Personal</string>
+    <string name="txt_food">Alimentos</string>
+    <string name="txt_others">Otros</string>
+
+    <string name="txt_call_us">Llámanos</string>
+    <string name="txt_call_us_number">5867-1762</string>
+    <string name="txt_send_us">Envía un SMS y te devolvemos la llamada </string>
+    <string name="txt_send_us_number">55-6578-7679</string>
+
 </resources>

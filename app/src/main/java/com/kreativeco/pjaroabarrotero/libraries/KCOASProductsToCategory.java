@@ -17,11 +17,14 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
     }
 
     JSONArray products = null;
-    private static final String ID = "id";
+    //private static final String ID = "id";
     private static final String COD = "cod";
     private static final String NAME = "name";
     private static final String IVA = "iva";
     private static final String IMAGEURL = "file_image";
+    private static final String COST = "cunit";
+    private static final String MINIMUMUNITS = "min";
+    private static final String PROMOTION = "promo";
 
     @Override
     protected ArrayList<HashMap<String, String>> doInBackground(String...params) {
@@ -38,18 +41,24 @@ public class KCOASProductsToCategory extends AsyncTask<String, Integer, ArrayLis
                 JSONObject aux = products.getJSONObject(i);
 
                 String nameProduct = aux.getString(NAME);
-                String idProduct = aux.getString(ID);
+                //String idProduct = aux.getString(ID);
                 String codProduct = aux.getString(COD);
                 String ivaProduct = aux.getString(IVA);
                 String imageProduct = aux.getString(IMAGEURL);
+                String productCost = aux.getString(COST);
+                String minimumUnits = aux.getString(MINIMUMUNITS);
+                String promotion = aux.getString(PROMOTION);
 
                 HashMap<String, String> map = new HashMap<>();
 
+                //map.put(ID, idProduct);
                 map.put(NAME, nameProduct);
-                map.put(ID, idProduct);
                 map.put(COD, codProduct);
                 map.put(IVA, ivaProduct);
                 map.put(IMAGEURL, imageProduct);
+                map.put(COST, productCost);
+                map.put(MINIMUMUNITS, minimumUnits);
+                map.put(PROMOTION, promotion);
 
                 listProductsToCat.add(map);
             }
