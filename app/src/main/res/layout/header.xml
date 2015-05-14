@@ -29,6 +29,7 @@
 
     <TextView
         style="@style/CodeFont"
+        android:id="@+id/tv_header"
         android:gravity="center"
         android:layout_marginTop="12dp"
         android:layout_alignParentLeft="true"

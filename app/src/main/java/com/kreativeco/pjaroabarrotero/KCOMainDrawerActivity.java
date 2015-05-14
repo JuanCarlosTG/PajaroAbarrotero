@@ -29,12 +29,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kreativeco.pjaroabarrotero.KCODatabase.KCOConnectionDataBase;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASProductsToCategory;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponse;
 import com.squareup.picasso.Picasso;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,12 +48,15 @@ public class KCOMainDrawerActivity extends Activity {
     public DrawerLayout leftDrawer;
     private ListView leftListDrawer;
 
+    Context thisClass = this;
+
     ImageView   redBar, blueBar, yellowBar, greenBar;
     ImageButton mainButton;
     Button      btInfo;
     TableLayout careTable, homeTable, foodTable, othersTable;
     ScrollView  careScroll, homeScroll, foodScroll, othersScroll ;
 
+    int numberTotalProducts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,6 @@ public class KCOMainDrawerActivity extends Activity {
         setContentView(R.layout.activity_kcomain_drawer);
 
         btInfo          = (Button) findViewById(R.id.bt_info);
-
         /* Tab Buttons*/
         redBar          = (ImageView) findViewById(R.id.iv_red);
         blueBar         = (ImageView) findViewById(R.id.iv_blue);
@@ -85,9 +89,10 @@ public class KCOMainDrawerActivity extends Activity {
         leftDrawer      = (DrawerLayout) findViewById(R.id.mainDraweLayout);
         mainButton      = (ImageButton) findViewById(R.id.menu_button_catalogue);
 
-        this.leftListDrawer = (ListView)findViewById(R.id.left_drawer);
-        ArrayList<KCOListItems> listItems = getItems();
-        KCOListItemsAdapter customaAdapter = new KCOListItemsAdapter(this, listItems);
+        this.leftListDrawer                 = (ListView)findViewById(R.id.left_drawer);
+        ArrayList<KCOListItems> listItems   = getItems();
+        KCOListItemsAdapter customaAdapter  = new KCOListItemsAdapter(this, listItems);
+
         leftListDrawer.setAdapter(customaAdapter);
         leftListDrawer.setOnItemClickListener(new DrawerView());
 
@@ -95,12 +100,14 @@ public class KCOMainDrawerActivity extends Activity {
 
     }
 
+    /*Listener for DrawerView*/
     private class DrawerView implements ListView.OnItemClickListener{
         @Override
         public void  onItemClick(AdapterView<?> parent, View view, int position, long id){
             selectItem(position);
         }
     }
+
 
     private void selectItem(int position){
         switch (position){
@@ -135,22 +142,6 @@ public class KCOMainDrawerActivity extends Activity {
                 launchOrders();
                 finish();
                 break;
-            case 8:
-                launchOrders();
-                finish();
-                break;
-            case 9:
-                launchOrders();
-                finish();
-                break;
-            case 10:
-                launchOrders();
-                finish();
-                break;
-            case 11:
-                launchOrders();
-                finish();
-                break;
 
             default:
                 break;
@@ -158,6 +149,7 @@ public class KCOMainDrawerActivity extends Activity {
         }
     }
 
+    /* set items for DrawerView */
     private ArrayList<KCOListItems>getItems(){
 
         ArrayList<KCOListItems> items = new ArrayList<>();
@@ -170,10 +162,10 @@ public class KCOMainDrawerActivity extends Activity {
         items.add(new KCOListItems(6, "drawable/_05_3alimentos"));
         items.add(new KCOListItems(7, "drawable/_05_4otros"));
         items.add(new KCOListItems(8, "Pedidos", "drawable/_05backtitle"));
-        items.add(new KCOListItems(9, "drawable/_05_5pendientes"));
-        items.add(new KCOListItems(10, "drawable/_05_6registrados"));
-        items.add(new KCOListItems(11, "drawable/_05_7enviados"));
-        items.add(new KCOListItems(12, "drawable/_05_8entregados"));
+        //items.add(new KCOListItems(9, "drawable/_05_5pendientes"));
+        //items.add(new KCOListItems(10, "drawable/_05_6registrados"));
+        //items.add(new KCOListItems(11, "drawable/_05_7enviados"));
+        //items.add(new KCOListItems(12, "drawable/_05_8entregados"));
 
         return items;
     }
@@ -213,6 +205,7 @@ public class KCOMainDrawerActivity extends Activity {
         foodScroll.setVisibility(View.INVISIBLE);
         othersScroll.setVisibility(View.INVISIBLE);
     }
+
 
     public void clickCategry(View v){
 
@@ -373,6 +366,13 @@ public class KCOMainDrawerActivity extends Activity {
         leftDrawer.openDrawer(leftListDrawer);
     }
 
+
+    /* Create table before to be used
+    *
+    * elementos = number of products into category
+    * catalogueTable = the category table from these products
+    *
+    * */
     private void deployButtons(int elementos, TableLayout catalogueTable) {
         int NUM_ROW;
         int indexRows=0;
@@ -410,13 +410,15 @@ public class KCOMainDrawerActivity extends Activity {
 
                 else{
 
-                    ImageButton img = (ImageButton) rl.findViewById(R.id.bt_product);
-                    TextView tvProductName = (TextView) rl.findViewById(R.id.tv_product_name);
-                    TextView tvCantity = (TextView) rl.findViewById(R.id.tv_cantity);
-                    Button btPlus = (Button) rl.findViewById(R.id.bt_plus);
-                    Button btMinus = (Button) rl.findViewById(R.id.bt_minus);
-                    //Button btAddProduct = (Button) rl.findViewById(R.id.bt_add_product);
+                    ImageButton img             = (ImageButton) rl.findViewById(R.id.bt_product);
+                    TextView    tvProductName   = (TextView) rl.findViewById(R.id.tv_product_name);
+                    TextView    tvCantity       = (TextView) rl.findViewById(R.id.tv_cantity);
+                    Button      btPlus          = (Button) rl.findViewById(R.id.bt_plus);
+                    Button      btMinus         = (Button) rl.findViewById(R.id.bt_minus);
+                    Button      btCar           = (Button) rl.findViewById(R.id.bt_car);
+
                     myRow.addView(rl);
+
                     indexRows = indexRows +1;
                 }
 
@@ -425,6 +427,9 @@ public class KCOMainDrawerActivity extends Activity {
         }
     }
 
+    /*
+        set products in correct row
+    */
     private void setCatalogue(ArrayList<HashMap<String, String>> output, TableLayout currentTable)
     {
         if(output!=null) {
@@ -460,34 +465,42 @@ public class KCOMainDrawerActivity extends Activity {
         }
     }
 
-
+    /*
+    *
+    * set all properties of each product
+    *
+    */
     public  void setProduct(TableLayout currentTable, Map<String, String> map, int indexCol, int indexRow){
 
         TableRow row;
         RelativeLayout rl;
         ImageButton imageButton;
-        TextView tvProductName, tvPrice;
-        Button btPlus, btMinus, btAddProduct;
+        final TextView tvProductName, tvPrice;
+        final Button btPlus, btMinus, btCar;
 
-        row = (TableRow) currentTable.getChildAt(indexRow);
-        rl = (RelativeLayout) row.getChildAt(indexCol);
-        imageButton = (ImageButton) rl.findViewById(R.id.bt_product);
+        row             = (TableRow) currentTable.getChildAt(indexRow);
+        rl              = (RelativeLayout) row.getChildAt(indexCol);
+        imageButton     = (ImageButton) rl.findViewById(R.id.bt_product);
 
-        btPlus = (Button) rl.findViewById(R.id.bt_plus);
-        btMinus = (Button) rl.findViewById(R.id.bt_minus);
-        tvProductName = (TextView) rl.findViewById(R.id.tv_product_name);
-        tvPrice = (TextView) rl.findViewById(R.id.tv_price);
+        btPlus          = (Button)      rl.findViewById(R.id.bt_plus);
+        btMinus         = (Button)      rl.findViewById(R.id.bt_minus);
+        tvProductName   = (TextView)    rl.findViewById(R.id.tv_product_name);
+        tvPrice         = (TextView)    rl.findViewById(R.id.tv_price);
+        btCar           = (Button)      rl.findViewById(R.id.bt_car);
+
         final TextView tvCantity = (TextView) rl.findViewById(R.id.tv_cantity);
 
-        String tagPromotion = map.get("min");
-        final String tagCod = map.get("cod");
-        String tagUrl = map.get("file_image");
-        String tagName = map.get("name");
-        String tagPrice = map.get("cunit");
+        String          tagMin = map.get("min");
+        final String    tagCod = map.get("cod");
+        final String    tagUrl = map.get("file_image");
+        String          tagName = map.get("name");
+        String          tagPrice = map.get("cunit");
 
-        tvCantity.setText(tagPromotion);
+        tvCantity.setText(tagMin);
+        final int min = Integer.parseInt(tvCantity.getText().toString());
 
         Picasso.with(this).load(tagUrl).placeholder(R.drawable.ic_launcher).resize(200,200).into(imageButton);
+
         tvProductName.setText(tagName);
         tvPrice.setText(tagPrice);
 
@@ -500,6 +513,12 @@ public class KCOMainDrawerActivity extends Activity {
         btMinus.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 minusClicked(tvCantity);
+            }
+        });
+
+        btCar.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                addProduct(btCar, tvCantity, tvPrice, tvProductName, min, tagUrl, tagCod);
             }
         });
 
@@ -556,4 +575,47 @@ public class KCOMainDrawerActivity extends Activity {
         startActivity(i);
     }
 
+    public void addProduct(Button btCar, TextView tvCantity, TextView tvPrice, TextView tvProductName, int min, String tagUrl, String cod)
+    {
+        double products = Double.parseDouble(tvCantity.getText().toString());
+
+        double price    = Double.parseDouble(tvPrice.getText().toString());
+
+        price = price * products;
+
+        String totalStr = roundTwoDecimals(price);
+
+        String numProds = tvCantity.getText().toString();
+        String cunit_total = tvPrice.getText().toString();
+        String productNamestr = tvProductName.getText().toString();
+
+        if(!numProds.matches("")){
+
+            numberTotalProducts = (int) products;
+
+            if(numberTotalProducts >= min){
+                KCOConnectionDataBase connectionDataBase = new KCOConnectionDataBase(thisClass);
+                Log.v("OCDIDIDIDIDID", cod);
+                connectionDataBase.insertInformation(connectionDataBase, productNamestr , tagUrl, cod, cunit_total, numProds, totalStr);
+                Toast.makeText(getBaseContext(), "Producto Agregado Al Carrito", Toast.LENGTH_LONG).show();
+                btCar.setBackground(getResources().getDrawable(R.drawable._0001_carrito_rojo));
+            }
+            else{
+                Toast.makeText(getBaseContext(),"Lo sentimos tu orden no fue procesada" +
+                        " la cantidad debe ser mayor o igual a: "+
+                        min,Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(getBaseContext(),"Lo sentimos tu orden no fue procesada" +
+                    " la cantidad debe ser mayor o igual a: "+
+                    min,Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    String roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d)).toString();
+    }
 }

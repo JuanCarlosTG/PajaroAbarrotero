@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +26,9 @@ import java.text.DecimalFormat;
 public class KCOProductDetailsActivity extends Activity {
 
 
-    TextView tvCost, tvProduct, tvProductMin, tvProductContent, tvBox, tvPrice, tvCantity;
+    TextView tvHeader, tvCost, tvProduct, tvProductMin, tvProductContent, tvBox, tvPrice, tvCantity;
     ImageView ivProduct;
     Button btPlus, btMinus;
-    ImageButton addProductToBasket;
     Context thisClass = this;
     String code;
     int numberTotalProducts;
@@ -41,7 +39,9 @@ public class KCOProductDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcoproduct_details);
 
+
         ivProduct           = (ImageView)   findViewById(R.id.iv_product);
+        tvHeader            = (TextView)    findViewById(R.id.tv_header);
         tvCost              = (TextView)    findViewById(R.id.tv_cost);
         tvProduct           = (TextView)    findViewById(R.id.tv_product);
         tvProductMin        = (TextView)    findViewById(R.id.tv_product_min);
@@ -52,6 +52,8 @@ public class KCOProductDetailsActivity extends Activity {
 
         btPlus              = (Button)      findViewById(R.id.bt_plus);
         btMinus             = (Button)      findViewById(R.id.bt_minus);
+
+        tvHeader.setText("Producto");
 
         btPlus.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -193,5 +195,11 @@ public class KCOProductDetailsActivity extends Activity {
     {
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         return Double.valueOf(twoDForm.format(d)).toString();
+    }
+
+    public void launchShoppingCar(View view){
+        Intent i = new Intent(KCOProductDetailsActivity.this, KCOMainDrawerActivity.class);
+        startActivity(i);
+        finish();
     }
 }

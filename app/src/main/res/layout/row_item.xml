@@ -12,6 +12,7 @@
         <Button
             style="@style/bt_details_and_car"
             android:layout_width="120dp"
+            android:id="@+id/bt_details"
             android:text="Ver Detalles"
             android:background="@android:color/white"/>
 
@@ -19,7 +20,7 @@
             style="@style/bt_details_and_car"
             android:layout_width="50dp"
             android:id="@+id/bt_car"
-            android:background="@drawable/_0001_carrito_rojo"/>
+            android:background="@drawable/_0000_carrito_gris"/>
 
     </LinearLayout>
 
@@ -62,6 +63,7 @@
 
         <TextView
             style="@style/tv_price"
+            android:gravity="center"
             android:id="@+id/tv_price"/>
 
     </LinearLayout>

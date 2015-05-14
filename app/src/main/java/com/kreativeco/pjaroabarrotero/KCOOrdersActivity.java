@@ -39,7 +39,6 @@ public class KCOOrdersActivity extends Activity {
 
     public DrawerLayout leftDrawerOrders;
     private ListView leftDrawerList;
-    TextView totalCost;
     Context thisClass = this;
     public String codeCustomer;
     LinearLayout llProductsIntoCar;
@@ -50,8 +49,6 @@ public class KCOOrdersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kcoorders);
 
-        //this.totalCost = (TextView) findViewById(R.id.total_cost);
-
         leftDrawerOrders = (DrawerLayout) findViewById(R.id.draweLayoutOrders);
 
         this.leftDrawerList = (ListView) findViewById(R.id.left_drawer_orders);
@@ -59,7 +56,6 @@ public class KCOOrdersActivity extends Activity {
         KCOListItemsAdapter customAdapterDrawer = new KCOListItemsAdapter(this, listItemsDrawer);
         leftDrawerList.setAdapter(customAdapterDrawer);
         leftDrawerList.setOnItemClickListener(new LeftDrawerView());
-
 
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -137,19 +133,6 @@ public class KCOOrdersActivity extends Activity {
         }
     }
 
-    private void selectItem(int position){
-        switch (position){
-            case 0:
-                launchMainDrawer();
-                finish();
-            default:
-                launchMainDrawer();
-                finish();
-                break;
-
-        }
-    }
-
     private ArrayList<KCOListItems>getItemsDrawer(){
 
         ArrayList<KCOListItems> items = new ArrayList<>();
@@ -171,6 +154,7 @@ public class KCOOrdersActivity extends Activity {
     }
 
     private void showShoppingCar(){
+
         KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
         Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
 
@@ -182,12 +166,13 @@ public class KCOOrdersActivity extends Activity {
 
                 RelativeLayout rl = (RelativeLayout) inflater.inflate(R.layout.ui_product_into_car, null);
 
-                ImageView ivProduct         = (ImageView) rl.findViewById(R.id.iv_product);
-                TextView tvProductName      = (TextView) rl.findViewById(R.id.tv_product_name);
-                final TextView tvCantity    = (TextView) rl.findViewById(R.id.tv_cantity);
-                Button btPlus               = (Button) rl.findViewById(R.id.bt_plus);
-                Button btMinus              = (Button) rl.findViewById(R.id.bt_minus);
-                TextView tvPrice            = (TextView) rl.findViewById(R.id.tv_price);
+                ImageView ivProduct         = (ImageView)   rl.findViewById(R.id.iv_product);
+                final TextView tvProductName      = (TextView)    rl.findViewById(R.id.tv_product_name);
+                final TextView tvCantity    = (TextView)    rl.findViewById(R.id.tv_cantity);
+                Button btPlus               = (Button)      rl.findViewById(R.id.bt_plus);
+                Button btMinus              = (Button)      rl.findViewById(R.id.bt_minus);
+                TextView tvPrice            = (TextView)    rl.findViewById(R.id.tv_price);
+                Button btDelete             = (Button)      rl.findViewById(R.id.bt_delete);
 
                 String name = cursorInfo.getString(0);
                 tvProductName.setText(name);
@@ -213,6 +198,12 @@ public class KCOOrdersActivity extends Activity {
                     }
                 });
 
+                btDelete.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View view){
+                        deleteClicked(tvProductName);
+                    }
+                });
+
                 llProductsIntoCar.addView(rl);
                 
                 String total = cursorInfo.getString(4);
@@ -226,41 +217,6 @@ public class KCOOrdersActivity extends Activity {
         }
 
     }
-
-    /*private ArrayList<KCOListItems>getItems(){
-
-        ArrayList<KCOListItems> items = new ArrayList<>();
-        int i = 1;
-        double totalFinal = 0.0;
-
-        items.add(new KCOListItems(i, "Pedido Pendiente", "drawable/_07icono_canasta"));
-        i++;
-
-        KCOConnectionDataBase connectionDB = new KCOConnectionDataBase(thisClass);
-        Cursor cursorInfo = connectionDB.getInformationFromBasket(connectionDB);
-
-        if(cursorInfo.moveToFirst() ) {
-                do {
-                    String name = cursorInfo.getString(0);
-                    String img = cursorInfo.getString(1);
-                    String price = cursorInfo.getString(2);
-                    String number = cursorInfo.getString(3);
-                    String total = cursorInfo.getString(4);
-
-                    String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " + total;
-                    Log.i("Query ", values);
-
-                    items.add(new KCOListItems(i, number + "\t" + name + " Costo Total p/p: $" + total, img));
-                    i++;
-                    totalFinal += Double.parseDouble(total);
-
-                } while (cursorInfo.moveToNext());
-
-                totalCost.setText(totalFinal + "");
-        }
-        //items.add(new KCOListItems(i, "Total: $" +totalFinal , "drawable/order02"));
-        return items;
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -283,7 +239,6 @@ public class KCOOrdersActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     public void getInfoFromDataBase(View v){
@@ -377,13 +332,6 @@ public class KCOOrdersActivity extends Activity {
 
     }
 
-    /*public void launchProductDetails()
-    {
-        Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOProductDetailsActivity.class);
-        startActivity(launchActivity);
-        finish();
-    }*/
-
     public void launchMainDrawer()
     {
         Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOMainDrawerActivity.class);
@@ -426,30 +374,6 @@ public class KCOOrdersActivity extends Activity {
         }).execute(Config.WS_GET_PROFILE, userProfile.getString("Token", ""));
     }
 
-    /*public void setListOrders(final ListView list, String orderStatus){
-
-        SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
-        new KCOASOrdersToCustomer(new KCOAsyncResponse() {
-            @Override
-            public void processFinish(ArrayList<HashMap<String, String>> output) {
-                ArrayList<KCOListItems> items = new ArrayList<>();
-                for(Map<String, String> map : output){
-                    String tagID = map.get("id");
-                    Log.d("Values Received ID",tagID);
-                    String tagCode = map.get("code_customer");
-                    Log.d("Values Received FOLIO",tagCode);
-                    String tagFolio = map.get("folio_number");
-                    String tagDate = map.get("date");
-                    items.add(new KCOListItems(1,"FOLIO:\t" + tagFolio + "\t\t FECHA:\t" + tagDate, "drawable/_07icono_canasta"));
-                }
-                KCOListAdapterToOrder customAdapter = new KCOListAdapterToOrder(KCOOrdersActivity.this, items);
-                list.setAdapter(customAdapter);
-                //list.setOnItemClickListener(new DrawerView());
-
-            }
-        }).execute(userProfile.getString("Token", ""), orderStatus);
-    }*/
-
     private void plusClicked(TextView textView){
         int products = Integer.parseInt(textView.getText().toString());
         products++;
@@ -463,5 +387,23 @@ public class KCOOrdersActivity extends Activity {
         products--;
         textView.setText(Integer.toString(products));
         Toast.makeText(this,"TagCode: " + products+"" , Toast.LENGTH_LONG).show();
+    }
+
+    public void launchShoppingCar(View view){
+        Intent i = new Intent(KCOOrdersActivity.this, KCOMainDrawerActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    public void deleteClicked(TextView tvProductName) {
+
+        String strName = tvProductName.getText().toString();
+        KCOConnectionDataBase connectionDataBase = new KCOConnectionDataBase(thisClass);
+
+        connectionDataBase.deleteItem(connectionDataBase, strName);
+        Toast.makeText(getBaseContext(), "Producto Agregado Al Carrito", Toast.LENGTH_LONG).show();
+
+        llProductsIntoCar.removeAllViews();
+        showShoppingCar();
     }
 }
