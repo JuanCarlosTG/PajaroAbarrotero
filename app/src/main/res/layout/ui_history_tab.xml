@@ -7,11 +7,15 @@
     <Button
         style="@style/bt_history"
         android:id="@+id/bt_on_route"
+        android:tag="1"
+        android:onClick="clickCategry"
         android:text="@string/txt_on_route"/>
 
     <Button
         style="@style/bt_history"
-        android:id="@+id/bt_delivered"
+        android:id="@+id/bt_received"
+        android:tag="2"
+        android:onClick="clickCategry"
         android:text="@string/txt_delivered"/>
 
 </LinearLayout>

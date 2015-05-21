@@ -9,7 +9,7 @@
         android:id="@+id/tv_number"
         android:paddingLeft="5dp"
         android:layout_weight="6"
-        android:text="100"/>
+        android:text="0"/>
 
     <TextView
         style="@style/tv_products_and_cost"
@@ -25,5 +25,5 @@
         style="@style/tv_products_and_cost"
         android:id="@+id/tv_total"
         android:layout_weight="6"
-        android:text="cuatro"/>
+        android:text="0.0"/>
 </LinearLayout>

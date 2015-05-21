@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_promos">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@id/iv_product"
+            android:background="@drawable/order01"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#00CED1"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:text="Paquete"
+            android:textSize="25sp"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="En la compra de $1000 llévate gratis un SHAMPOO"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_toLeftOf="@+id/tv_price"
+                android:gravity="center"
+                android:background="@drawable/_0000_carrito_gris"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_price"
+                android:layout_alignParentRight="true"
+                android:background="#AA261B"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

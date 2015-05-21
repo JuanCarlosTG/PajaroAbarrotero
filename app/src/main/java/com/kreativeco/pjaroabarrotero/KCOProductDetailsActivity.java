@@ -90,9 +90,8 @@ public class KCOProductDetailsActivity extends Activity {
 
             if(numberTotalProducts >= aux){
                 KCOConnectionDataBase connectionDataBase = new KCOConnectionDataBase(thisClass);
-                Log.v("OCDIDIDIDIDID", cod);
                 connectionDataBase.insertInformation(connectionDataBase, productNamestr , tagUrl, cod, cunit_total, numProds, totalStr);
-                Toast.makeText(getBaseContext(), "Producto Agregado Al Carrito", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Producto Agregado Al Carrito", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(KCOProductDetailsActivity.this, KCOOrdersActivity.class ));
                 finish();
             }

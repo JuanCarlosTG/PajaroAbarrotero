@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ll_promos"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#00CED1"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:text="Promociones"
+        android:textSize="25sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_routes"
+        android:layout_weight="1">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+                <include layout="@layout/row_item_promo"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

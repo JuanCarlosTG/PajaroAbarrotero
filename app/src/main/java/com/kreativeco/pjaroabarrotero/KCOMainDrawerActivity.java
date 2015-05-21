@@ -28,6 +28,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.kreativeco.pjaroabarrotero.KCODatabase.KCOConnectionDataBase;
 import com.kreativeco.pjaroabarrotero.libraries.Config;
@@ -41,9 +42,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jpardogo.android.googleprogressbar.library.FoldingCirclesDrawable;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class KCOMainDrawerActivity extends Activity {
 
     /*Parameters*/
+
+    ProgressBar mProgressBar;
 
     public DrawerLayout leftDrawer;
     private ListView leftListDrawer;
@@ -65,9 +73,14 @@ public class KCOMainDrawerActivity extends Activity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.BLUE);
         }
+
+        ButterKnife.inject(this);
+//        mProgressBar.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(this).build());
+
         setContentView(R.layout.activity_kcomain_drawer);
 
         btInfo          = (Button) findViewById(R.id.bt_info);
+
         /* Tab Buttons*/
         redBar          = (ImageView) findViewById(R.id.iv_red);
         blueBar         = (ImageView) findViewById(R.id.iv_blue);
@@ -115,7 +128,7 @@ public class KCOMainDrawerActivity extends Activity {
                 leftDrawer.closeDrawers();
                 break;
             case 1:
-                launchProfile();
+                //launchProfile();
                 leftDrawer.closeDrawers();
                 finish();
                 break;
@@ -142,11 +155,34 @@ public class KCOMainDrawerActivity extends Activity {
                 launchOrders();
                 finish();
                 break;
+            case 8:
+                promos();
+                break;
+            case 9:
+                logout();
+                break;
 
             default:
                 break;
 
         }
+    }
+
+    private void logout(){
+        SharedPreferences tokenUser = getSharedPreferences("tokenUser",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = tokenUser.edit();
+        editor.clear();
+        editor.commit();
+
+        Intent launchActivity = new Intent(KCOMainDrawerActivity.this,KCOLoginActivity.class);
+        startActivity(launchActivity);
+        finish();
+    }
+
+    private void promos(){
+        Intent launchActivity = new Intent(KCOMainDrawerActivity.this,KCOPromosActivity.class);
+        startActivity(launchActivity);
+        finish();
     }
 
     /* set items for DrawerView */
@@ -161,8 +197,9 @@ public class KCOMainDrawerActivity extends Activity {
         items.add(new KCOListItems(5, "drawable/_05_2hogar"));
         items.add(new KCOListItems(6, "drawable/_05_3alimentos"));
         items.add(new KCOListItems(7, "drawable/_05_4otros"));
-        items.add(new KCOListItems(8, "Pedidos", "drawable/_05backtitle"));
-        //items.add(new KCOListItems(9, "drawable/_05_5pendientes"));
+        items.add(new KCOListItems(8, "Carrito De Compra", "drawable/_05backtitle"));
+        items.add(new KCOListItems(9, "Promociones", "drawable/_05backtitle"));
+        items.add(new KCOListItems(10, "Logout", "drawable/_05backtitle"));
         //items.add(new KCOListItems(10, "drawable/_05_6registrados"));
         //items.add(new KCOListItems(11, "drawable/_05_7enviados"));
         //items.add(new KCOListItems(12, "drawable/_05_8entregados"));
@@ -534,14 +571,12 @@ public class KCOMainDrawerActivity extends Activity {
         launchActivity.putExtra("code", tagCod);
         startActivity(launchActivity);
         finish();
-        Toast.makeText(this,"TagCode: " + tagCod , Toast.LENGTH_SHORT).show();
     }
 
     private void plusClicked(TextView textView){
         int products = Integer.parseInt(textView.getText().toString());
         products++;
         textView.setText(Integer.toString(products));
-        Toast.makeText(this,"TagCode: " + products+"" , Toast.LENGTH_LONG).show();
     }
 
     private void minusClicked(TextView textView){
@@ -549,7 +584,6 @@ public class KCOMainDrawerActivity extends Activity {
         if(products<= 0) return;
         products--;
         textView.setText(Integer.toString(products));
-        Toast.makeText(this,"TagCode: " + products+"" , Toast.LENGTH_LONG).show();
     }
 
     public void showInfo(View v) {

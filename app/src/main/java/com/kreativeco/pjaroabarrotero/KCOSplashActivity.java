@@ -29,9 +29,25 @@ public class KCOSplashActivity extends Activity {
                     SharedPreferences userProfile = getSharedPreferences("tokenUser", Context.MODE_PRIVATE);
 
                     if(userProfile.contains("Token")){
-                        Intent intent = new Intent(getBaseContext(), KCOMainDrawerActivity.class);
-                        startActivity(intent);
-                        finish();
+                        int userType = Integer.parseInt(userProfile.getString("User_type", ""));
+                        Log.i("USER FUCK", userType + "");
+
+                        if(userType == 2){
+                            Intent launchActivity = new Intent(KCOSplashActivity.this, KCOSearchShopsActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+
+                        }else if(userType == 3){
+                            Intent launchActivity = new Intent(KCOSplashActivity.this, KCOMainDrawerActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+
+                        }else if(userType == 4){
+                            Intent launchActivity = new Intent(KCOSplashActivity.this, KCORoutesActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+                        }
+
                     } else {
                         Intent i=new Intent(getBaseContext(), KCOLoginActivity.class);
                         startActivity(i);

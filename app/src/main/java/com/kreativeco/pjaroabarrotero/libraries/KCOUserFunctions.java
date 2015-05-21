@@ -23,6 +23,10 @@ public class KCOUserFunctions {
     private static String etiqueta_getO = "getOrdersToCustomer";
     private static String etiqueta_getOTCD = "getOrderToCustomerDetail";
 
+    private static String etiqueta_getShopAc = "getShopActives";
+    private static String etiqueta_getOrdersOp = "getOrdersToOperator";
+    private static String etiqueta_courtO = "courtOrder";
+
     // constructor
     public KCOUserFunctions(){
         jsonParser = new KCOParseJSON();
@@ -231,6 +235,83 @@ public class KCOUserFunctions {
         parametros.add(new BasicNameValuePair("task", etiqueta_getOTCD));
         parametros.add(new BasicNameValuePair("token", token));
         parametros.add(new BasicNameValuePair("folio_number", folio));
+        JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
+    }
+
+
+    public JSONObject getShopActives(String token){
+        // Construimos los parametros
+        List<NameValuePair> parametros = new ArrayList<>();
+        parametros.add(new BasicNameValuePair("task", etiqueta_getShopAc));
+        parametros.add(new BasicNameValuePair("token", token));
+        JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE", jsonR.toString());
+            return jsonR;
+        }
+    }
+
+
+    public JSONObject getOrdersOp(String token,String alias, String status){
+        // Construimos los parametros
+        List<NameValuePair> parametros = new ArrayList<>();
+        parametros.add(new BasicNameValuePair("task", etiqueta_getOrdersOp));
+        parametros.add(new BasicNameValuePair("token", token));
+        parametros.add(new BasicNameValuePair("alias", alias));
+        parametros.add(new BasicNameValuePair("status", status));
+
+        JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
+        if(json!=null){
+            // return json
+            Log.d("JSON RESPONSE 1", json.toString());
+            return json;
+        }else{
+            JSONObject jsonR = new JSONObject();
+            try {
+                jsonR.put("status","-1");
+                jsonR.put("message","Revisa tu conexión a Internet");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("JSON RESPONSE 2", jsonR.toString());
+            return jsonR;
+        }
+    }
+
+
+    public JSONObject courtOrder(String token, String jsonOrder){
+        // Construimos los parametros
+        List<NameValuePair> parametros = new ArrayList<>();
+        parametros.add(new BasicNameValuePair("task", etiqueta_courtO));
+        parametros.add(new BasicNameValuePair("token", token));
+        //parametros.add(new BasicNameValuePair("json", Arrays.toString(jsonOrder)));
+        parametros.add(new BasicNameValuePair("json", jsonOrder));
         JSONObject json = jsonParser.getJSONFromUrl(webServicesURL, parametros);
         if(json!=null){
             // return json

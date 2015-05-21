@@ -3,46 +3,40 @@ package com.kreativeco.pjaroabarrotero;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kreativeco.pjaroabarrotero.KCODatabase.KCOConnectionDataBase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.kreativeco.pjaroabarrotero.libraries.Config;
 import com.kreativeco.pjaroabarrotero.libraries.KCOASWS;
 import com.kreativeco.pjaroabarrotero.libraries.KCOAsyncResponseG;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class KCOOrdersActivity extends Activity {
+/**
+ * Created by kreativeco on 21/05/15.
+ */
+public class KCOOrdersOnRouteActivity extends Activity {
 
-    public DrawerLayout leftDrawerOrders;
-    private ListView leftDrawerList;
-    Context thisClass = this;
     public String codeCustomer;
     LinearLayout llProductsIntoCar;
     LayoutInflater inflater;
+    Context thisClass = this;
     TextView tvHeader, tvTotal, tvNumber;
     private int intNumber = 0;
     private double dblTotal = 0.0;
@@ -52,17 +46,7 @@ public class KCOOrdersActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kcoorders);
-
-        leftDrawerOrders = (DrawerLayout) findViewById(R.id.draweLayoutOrders);
-
-        this.leftDrawerList = (ListView) findViewById(R.id.left_drawer_orders);
-        ArrayList<KCOListItems> listItemsDrawer = getItemsDrawer();
-        KCOListItemsAdapter customAdapterDrawer = new KCOListItemsAdapter(this, listItemsDrawer);
-        leftDrawerList.setAdapter(customAdapterDrawer);
-        leftDrawerList.setOnItemClickListener(new LeftDrawerView());
-
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        setContentView(R.layout.activity_orders_on_route);
 
         llProductsIntoCar   = (LinearLayout) findViewById(R.id.ll_products_into_car);
         inflater            = getLayoutInflater();
@@ -75,111 +59,6 @@ public class KCOOrdersActivity extends Activity {
         gone1.setVisibility(View.INVISIBLE);
 
         showShoppingCar();
-    }
-
-
-    private class LeftDrawerView implements  ListView.OnItemClickListener{
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-            selectItemDrawer(position);
-        }
-    }
-
-    private void selectItemDrawer(int position){
-        switch (position){
-            case 0:
-                launchMainDrawer();
-                finish();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 1:
-                leftDrawerOrders.closeDrawers();
-                break;
-            case 2:
-                launchMainDrawer();
-                finish();
-                break;
-            case 3:
-                launchMainDrawer();
-                finish();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 4:
-                launchMainDrawer();
-                finish();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 5:
-                launchMainDrawer();
-                finish();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 6:
-                launchMainDrawer();
-                finish();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 7:
-                leftDrawerOrders.closeDrawers();
-                break;
-            case 8:
-                promos();
-                break;
-            case 9:
-                logout();
-                break;
-            /*case 10:
-                leftDrawerOrders.closeDrawers();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;
-            case 11:
-                leftDrawerOrders.closeDrawers();
-                Log.i("posicion sleccionada", String.valueOf(position));
-                break;*/
-
-            default:
-                break;
-
-        }
-    }
-
-    private void logout(){
-        SharedPreferences tokenUser = getSharedPreferences("tokenUser",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = tokenUser.edit();
-        editor.clear();
-        editor.commit();
-
-        Intent launchActivity = new Intent(KCOOrdersActivity.this,KCOLoginActivity.class);
-        startActivity(launchActivity);
-        finish();
-    }
-
-    private void promos(){
-        Intent launchActivity = new Intent(KCOOrdersActivity.this,KCOPromosActivity.class);
-        startActivity(launchActivity);
-        finish();
-    }
-
-    private ArrayList<KCOListItems>getItemsDrawer(){
-
-        ArrayList<KCOListItems> items = new ArrayList<>();
-
-        items.add(new KCOListItems(1, "MENÚ", "drawable/_05backtitle"));
-        items.add(new KCOListItems(2, "Mi Perfil", "drawable/_05backtitle"));
-        items.add(new KCOListItems(3, "Catálogo", "drawable/_05backtitle"));
-        items.add(new KCOListItems(4, "drawable/_05_1cuidado"));
-        items.add(new KCOListItems(5, "drawable/_05_2hogar"));
-        items.add(new KCOListItems(6, "drawable/_05_3alimentos"));
-        items.add(new KCOListItems(7, "drawable/_05_4otros"));
-        items.add(new KCOListItems(8, "Carrito De Compra", "drawable/_05backtitle"));
-        items.add(new KCOListItems(9, "Promociones", "drawable/_05backtitle"));
-        items.add(new KCOListItems(10, "Logout", "drawable/_05backtitle"));
-
-        //items.add(new KCOListItems(10, "drawable/_05_6registrados"));
-        //items.add(new KCOListItems(11, "drawable/_05_7enviados"));
-        //items.add(new KCOListItems(12, "drawable/_05_8entregados"));
-
-        return items;
     }
 
     private void showShoppingCar(){
@@ -238,7 +117,7 @@ public class KCOOrdersActivity extends Activity {
                 });
 
                 llProductsIntoCar.addView(rl);
-                
+
                 String total = cursorInfo.getString(4);
 
                 String values = "name: " + name + " img: " + img + " price: " + price + " number: " + number + " total: " + total;
@@ -368,13 +247,8 @@ public class KCOOrdersActivity extends Activity {
 
     public void launchMainDrawer()
     {
-        Intent launchActivity = new Intent(KCOOrdersActivity.this, KCOMainDrawerActivity.class);
+        Intent launchActivity = new Intent(KCOOrdersOnRouteActivity.this, KCOMainDrawerActivity.class);
         startActivity(launchActivity);
-    }
-
-    public void openDrawer(View v)
-    {
-        leftDrawerOrders.openDrawer(leftDrawerList);
     }
 
     public void getCodeCustomer(){
@@ -424,7 +298,7 @@ public class KCOOrdersActivity extends Activity {
     }
 
     public void launchShoppingCar(View view){
-        Intent i = new Intent(KCOOrdersActivity.this, KCOMainDrawerActivity.class);
+        Intent i = new Intent(KCOOrdersOnRouteActivity.this, KCOMainDrawerActivity.class);
         startActivity(i);
         finish();
     }

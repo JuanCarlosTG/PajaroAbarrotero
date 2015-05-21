@@ -1,0 +1,71 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/_fondo"
+    android:id="@id/mainMenuLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_header">
+
+        <include layout="@layout/header"/>
+        <include layout="@layout/ui_products_and_total"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_header"
+        android:layout_margin="12dp"
+        android:id="@+id/list_views_rl">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="760dp"
+            android:layout_alignStart="@+id/send_order_btn">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_products_into_car">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/bt_sended"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:background="@drawable/back_blue"
+                android:visibility="visible"
+                android:textColor="#FFFFFF"
+                android:onClick="getInfoFromDataBase"
+                android:text="Pedido Entregado"
+                android:textSize="20dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/bt_received"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/back_blue"
+                android:visibility="visible"
+                android:text="Pedido No Entregado"
+                android:textSize="20dp"
+                android:onClick="getInfoFromDataBase"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

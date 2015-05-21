@@ -92,6 +92,7 @@ public class KCOLoginActivity extends Activity {
                         //Almacenamos los datos del JSON en la estructura
                         editor.putString("Message", message);
                         editor.putString("Token", token);
+                        editor.putString("User_type", json.getString("user_type"));
                         editor.commit();
 
                         //Debug
@@ -99,9 +100,25 @@ public class KCOLoginActivity extends Activity {
                         Log.d("Token", "Token : " + token);
                         pDialog.dismiss();
 
-                        Intent launchActivity = new Intent(KCOLoginActivity.this, KCOMainDrawerActivity.class);
-                        startActivity(launchActivity);
-                        finish();
+                        int userType = Integer.parseInt(json.getString("user_type"));
+                        Log.i("FUUCCKK", userType+"");
+
+                        if(userType == 2){
+                            Intent launchActivity = new Intent(KCOLoginActivity.this, KCOSearchShopsActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+
+                        }else if(userType == 3){
+                            Intent launchActivity = new Intent(KCOLoginActivity.this, KCOMainDrawerActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+
+                        }else if(userType == 4){
+                            Intent launchActivity = new Intent(KCOLoginActivity.this, KCORoutesActivity.class);
+                            startActivity(launchActivity);
+                            finish();
+                        }
+
                         Log.d("Login","Complete Process To Login");
                     }else if(Integer.parseInt(status)==0){
                         Log.d("Login","Status 0");
@@ -146,7 +163,6 @@ public class KCOLoginActivity extends Activity {
         title.setText(R.string.title_reset_password);
         title.setGravity(Gravity.CENTER);
         title.setTextSize(18);
-        //title.setTextColor(Color.WHITE);
 
         builder.setCustomTitle(title);
 

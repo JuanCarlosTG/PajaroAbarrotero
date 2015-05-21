@@ -17,5 +17,6 @@ public class Config {
     public static final String WS_GET_PROFILE = "3";
     public static final String WS_GET_PRODUCT = "4";
     public static final String WS_ADD_ORDER = "5";
+    public static final String WS_COURT_ORDER = "6";
 
 }

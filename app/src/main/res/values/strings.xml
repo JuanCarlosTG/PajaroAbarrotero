@@ -14,6 +14,9 @@
     <string name="title_activity_kcosplash">Pájaro Abarrotero</string>
     <string name="title_activity_kcologin">KCOLoginActivity</string>
 
+    <string name="title_activity_kcosearch">Search</string>
+
+
     <!-- Strings for KCOLoginActivity and its xml file -->
 
     <string name="user">USUARIO</string>
@@ -84,5 +87,7 @@
 
     <string name="txt_on_route">En ruta</string>
     <string name="txt_delivered">Entregados</string>
+
+    <string name="txt_query_hint">Busca Tu Tienda</string>
 
 </resources>

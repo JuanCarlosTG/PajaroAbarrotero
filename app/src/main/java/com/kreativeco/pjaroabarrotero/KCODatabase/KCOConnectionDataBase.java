@@ -77,7 +77,7 @@ public class KCOConnectionDataBase extends SQLiteOpenHelper {
 
     public void deleteItem(KCOConnectionDataBase connectDB, String name){
         SQLiteDatabase SqlDB = connectDB.getWritableDatabase();
-        SqlDB.delete(BasketDataBase.TABLE_NAME, BasketDataBase.COLUMN_NAME_PRODUCT_NAME + " = " + name, null);
+        SqlDB.delete(BasketDataBase.TABLE_NAME, BasketDataBase.COLUMN_NAME_PRODUCT_NAME + "='"+name+"'", null);
     }
 
 }
